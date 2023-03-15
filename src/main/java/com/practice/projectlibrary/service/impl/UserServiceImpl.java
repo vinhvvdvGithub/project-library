@@ -24,7 +24,7 @@ public class UserServiceImpl implements IUserService {
     public List<UserRespone> users() {
 
         return userRepository.findAll().stream().map(
-                user -> new UserRespone(user.getEmail(),user.getUsername(),user.getCreatedAt())
+                user -> new UserRespone(user.getEmail(), user.getUsername(), user.getCreatedAt())
         ).collect(Collectors.toList());
     }
 
@@ -48,8 +48,8 @@ public class UserServiceImpl implements IUserService {
     @Override
     public Optional<User> findByEmail(String email) {
         Optional<User> user = userRepository.findUserByEmail(email);
-        if (user.isEmpty()){
-            throw  new RuntimeException("Not found user by id");
+        if (user.isEmpty()) {
+            throw new RuntimeException("Not found user by id");
         }
         return Optional.of(user.get());
     }

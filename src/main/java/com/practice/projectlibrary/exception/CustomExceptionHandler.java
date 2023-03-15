@@ -13,20 +13,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @RestControllerAdvice
-public class CustomExceptionHandler  {
+public class CustomExceptionHandler {
 
     //not found exception
     @ExceptionHandler(NotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
-    public ErrorMessage handlerNotFoundException(NotFoundException ex, WebRequest req){
-        return new ErrorMessage(HttpStatus.NOT_FOUND,ex.getMessage());
+    public ErrorMessage handlerNotFoundException(NotFoundException ex, WebRequest req) {
+        return new ErrorMessage(HttpStatus.NOT_FOUND, ex.getMessage());
     }
 
     //bad request exception
     @ExceptionHandler(BadRequestException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public ErrorMessage handlerBadRequestException(BadRequestException ex, WebRequest req){
-        return new ErrorMessage(HttpStatus.BAD_REQUEST,ex.getMessage());
+    public ErrorMessage handlerBadRequestException(BadRequestException ex, WebRequest req) {
+        return new ErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
 //    //validation exception, haven't finished

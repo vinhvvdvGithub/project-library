@@ -1,6 +1,5 @@
 package com.practice.projectlibrary.repository;
 
-import com.practice.projectlibrary.dto.respone.CategoryRespone;
 import com.practice.projectlibrary.entity.Category;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

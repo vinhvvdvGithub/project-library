@@ -1,6 +1,7 @@
 package com.practice.projectlibrary.common.Mapper;
 
 import com.practice.projectlibrary.dto.LoanDTO;
+import com.practice.projectlibrary.dto.request.LoanRequest;
 import com.practice.projectlibrary.entity.Loan;
 
 public class LoanMapper {
@@ -13,7 +14,17 @@ public class LoanMapper {
         return INSTANCE;
     }
 
-    //to Entity
+
+    //to Entity from request
+    public Loan toEntity(LoanRequest loanRequest){
+        Loan loan = new Loan();
+        loan.setBookId(loanRequest.getBookId());
+        loan.setQuantity(loanRequest.getQuantity());
+        return loan;
+
+    }
+
+    //to Entity from dto
     public Loan toEntity(LoanDTO loanDTO){
         Loan loan = new Loan();
         loan.setBookId(loanDTO.getBookId());

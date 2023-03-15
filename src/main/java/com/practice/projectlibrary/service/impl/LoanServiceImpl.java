@@ -3,7 +3,6 @@ package com.practice.projectlibrary.service.impl;
 import com.practice.projectlibrary.common.Mapper.LoanMapper;
 import com.practice.projectlibrary.dto.LoanDTO;
 import com.practice.projectlibrary.dto.request.LoanRequest;
-import com.practice.projectlibrary.dto.respone.LoanRespone;
 import com.practice.projectlibrary.entity.Loan;
 import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.ILoanRepository;
@@ -19,7 +18,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
-public class LoanServiceImpl  implements ILoanService{
+public class LoanServiceImpl implements ILoanService {
     @Autowired
     private ILoanRepository loanRepository;
 
@@ -30,7 +29,7 @@ public class LoanServiceImpl  implements ILoanService{
     @Override
     public List<LoanDTO> loans() {
         List<LoanDTO> loansDTO = new ArrayList<>();
-         loanRepository.loans().stream().map(
+        loanRepository.loans().stream().map(
                 loan -> loansDTO.add(LoanMapper.getInstance().toDTO(loan))
         ).collect(Collectors.toList());
 
@@ -38,20 +37,19 @@ public class LoanServiceImpl  implements ILoanService{
     }
 
 
-
     @Override
     public LoanDTO addLoan(LoanRequest loanRequest) {
         LoanDTO loanDTO;
         Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
         Loan loan = new Loan();
+        loan = LoanMapper.getInstance().toEntity(loanRequest);
         loan.setBookId(loanRequest.getBookId());
-        loan.setUser( userRepository.findUserById(loanRequest.getUserId()).get());
-        loan.setQuantity(loanRequest.getQuantity());
+        loan.setUser(userRepository.findUserById(loanRequest.getUserId()).get());
         loan.setActive(true);
         loan.setStatus("available");
         loan.setDateOfCheckout(dateCurrent);
         //3 days
-        loan.setDataDue(new Timestamp(System.currentTimeMillis()+259200000));
+        loan.setDataDue(new Timestamp(System.currentTimeMillis() + 259200000));
         loan.setDateReturned(null);
         loan.setDateOfCheckout(dateCurrent);
         loan.setCreatedBy("Librarian");
@@ -63,18 +61,18 @@ public class LoanServiceImpl  implements ILoanService{
 
     @Override
     public List<LoanDTO> addListLoan(List<LoanRequest> loanRequests) {
-        List<LoanDTO> loansDTO= new ArrayList<>();
+        List<LoanDTO> loansDTO = new ArrayList<>();
         Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
-        for (LoanRequest loanRequest : loanRequests){
+        for (LoanRequest loanRequest : loanRequests) {
             Loan loan = new Loan();
             loan.setBookId(loanRequest.getBookId());
-            loan.setUser( userRepository.findUserById(loanRequest.getUserId()).get());
+            loan.setUser(userRepository.findUserById(loanRequest.getUserId()).get());
             loan.setQuantity(loanRequest.getQuantity());
             loan.setActive(true);
             loan.setStatus("available");
             loan.setDateOfCheckout(dateCurrent);
             //3 days
-            loan.setDataDue(new Timestamp(System.currentTimeMillis()+259200000));
+            loan.setDataDue(new Timestamp(System.currentTimeMillis() + 259200000));
             loan.setDateReturned(null);
             loan.setDateOfCheckout(dateCurrent);
             loan.setCreatedBy("Librarian");
@@ -86,8 +84,7 @@ public class LoanServiceImpl  implements ILoanService{
     }
 
     @Override
-    public LoanDTO updateLoan( Long id, LoanRequest loanRequests) {
-
+    public LoanDTO updateLoan(Long id, LoanRequest loanRequests) {
 
 
         return null;
@@ -98,12 +95,12 @@ public class LoanServiceImpl  implements ILoanService{
     public LoanDTO deleteLoan(Long id) {
         Optional<Loan> currentLoan = Optional.of(loanRepository.getReferenceById(id));
         LoanDTO loanDTO;
-        if(currentLoan.isPresent()){
+        if (currentLoan.isPresent()) {
             currentLoan.get().setActive(false);
             currentLoan.get().setStatus("removed");
-            loanDTO= LoanMapper.getInstance().toDTO(currentLoan.get());
+            loanDTO = LoanMapper.getInstance().toDTO(currentLoan.get());
             return loanDTO;
-        }else{
+        } else {
             throw new NotFoundException("Loan not found by id");
         }
 
@@ -115,13 +112,13 @@ public class LoanServiceImpl  implements ILoanService{
     public LoanDTO userToReturn(Long id) {
         Optional<Loan> currentLoan = Optional.of(loanRepository.getReferenceById(id));
         LoanDTO loanDTO;
-        if(currentLoan.isPresent()){
+        if (currentLoan.isPresent()) {
             currentLoan.get().setActive(false);
             currentLoan.get().setStatus("returned");
             currentLoan.get().setDateReturned(new Timestamp(System.currentTimeMillis()));
-            loanDTO= LoanMapper.getInstance().toDTO(currentLoan.get());
+            loanDTO = LoanMapper.getInstance().toDTO(currentLoan.get());
             return loanDTO;
-        }else{
+        } else {
             throw new NotFoundException("Loan not found by id");
         }
     }

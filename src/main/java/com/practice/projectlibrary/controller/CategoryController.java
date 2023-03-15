@@ -2,7 +2,6 @@ package com.practice.projectlibrary.controller;
 
 import com.practice.projectlibrary.dto.CategoryDTO;
 import com.practice.projectlibrary.dto.request.CategoryRequest;
-import com.practice.projectlibrary.dto.respone.CategoryRespone;
 import com.practice.projectlibrary.dto.respone.ResponeObject;
 import com.practice.projectlibrary.exception.BadRequestException;
 import com.practice.projectlibrary.repository.ICategoryRepository;
@@ -28,7 +27,7 @@ public class CategoryController {
 
     //get list category
     @GetMapping("/")
-    public List<CategoryRespone> categories(){
+    public List<CategoryDTO> categories(){
         return categorySevice.categories();
     }
 
@@ -48,7 +47,7 @@ public class CategoryController {
     }
 
     //add category
-    @PostMapping("/")
+    @PostMapping("/add-category")
     public CategoryDTO addCategory(@Valid @RequestBody CategoryRequest categoryRequest){
 
         return categorySevice.addCategory(categoryRequest);

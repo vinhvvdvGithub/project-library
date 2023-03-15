@@ -3,7 +3,6 @@ package com.practice.projectlibrary.service.impl;
 import com.practice.projectlibrary.common.Mapper.BookMapper;
 import com.practice.projectlibrary.dto.BookDTO;
 import com.practice.projectlibrary.dto.request.BookRequest;
-import com.practice.projectlibrary.dto.respone.BookRespone;
 import com.practice.projectlibrary.entity.Book;
 import com.practice.projectlibrary.entity.Category;
 import com.practice.projectlibrary.exception.BadRequestException;
@@ -32,60 +31,44 @@ public class BookServiceImpl implements IBookService {
     private ICategoryRepository categoryRepository;
 
 
-
     //list book from db return to client DTO format
     @Override
     public List<BookDTO> books() {
-        List<BookDTO>  bookDTOs = new ArrayList<>();
+        List<BookDTO> bookDTOs = new ArrayList<>();
 
-         bookRepository.books().stream().map(
-                book ->bookDTOs.add(BookMapper.getInstance().toDto(
+        bookRepository.books().stream().map(
+                book -> bookDTOs.add(BookMapper.getInstance().toDto(
                         book)
                 )).collect(Collectors.toList());
 
-         return bookDTOs;
+        return bookDTOs;
     }
 
 
-
-    public BookDTO addBook( BookRequest bookRequest){
-        BookDTO bookDTO=new BookDTO();
+    public BookDTO addBook(BookRequest bookRequest) {
+        BookDTO bookDTO = new BookDTO();
         Book book = new Book();
-        book.setBookTitle(bookRequest.getBookTitle());
-        book.setAuthor(bookRequest.getAuthor());
-        book.setDescription(bookRequest.getDescription());
-        book.setSlug(bookRequest.getSlug());
-        book.setImage(bookRequest.getImage());
-        book.setQuantity(bookRequest.getQuantity());
-        book.setPrice(bookRequest.getPrice());
+        book = BookMapper.getInstance().toEntity(bookRequest);
         book.setStatus(true);
         book.setCategory(categoryRepository.getById(bookRequest.getCategoryId()));
-        book.setCreatedAt(new Timestamp(System.currentTimeMillis()));
         book.setCreatedBy("Librarian");
 
         bookRepository.save(book);
 
-        bookDTO=BookMapper.getInstance().toDto(book);
+        bookDTO = BookMapper.getInstance().toDto(book);
 
         return bookDTO;
     }
 
     @Override
     public List<BookDTO> addListBook(List<BookRequest> bookRequest) {
-        List<BookDTO> booksDTO=new ArrayList<>();
+        List<BookDTO> booksDTO = new ArrayList<>();
 
-        for (BookRequest bookReq: bookRequest){
+        for (BookRequest bookReq : bookRequest) {
             Book book = new Book();
-            book.setBookTitle(bookReq.getBookTitle());
-            book.setAuthor(bookReq.getAuthor());
-            book.setDescription(bookReq.getDescription());
-            book.setSlug(bookReq.getSlug());
-            book.setImage(bookReq.getImage());
-            book.setQuantity(bookReq.getQuantity());
-            book.setPrice(bookReq.getPrice());
+            book = BookMapper.getInstance().toEntity(bookReq);
             book.setStatus(true);
             book.setCategory(categoryRepository.getById(bookReq.getCategoryId()));
-            book.setCreatedAt(new Timestamp(System.currentTimeMillis()));
             book.setCreatedBy("Librarian");
 
             bookRepository.save(book);
@@ -100,7 +83,7 @@ public class BookServiceImpl implements IBookService {
     public BookDTO updateBook(String slug, Long id, BookRequest bookRequest) {
         BookDTO bookDTO;
         Optional<Book> bookExist = Optional.ofNullable(bookRepository.getBookBySlugId(slug, id));
-        if(bookExist.isPresent()){
+        if (bookExist.isPresent()) {
             bookExist.get().setBookTitle(bookRequest.getBookTitle());
             bookExist.get().setAuthor(bookRequest.getAuthor());
             bookExist.get().setDescription(bookRequest.getDescription());
@@ -111,10 +94,10 @@ public class BookServiceImpl implements IBookService {
             Category category = categoryRepository.getById(bookRequest.getCategoryId());
             bookExist.get().setCategory(category);
             bookRepository.save(bookExist.get());
-            bookDTO=BookMapper.getInstance().toDto(bookExist.get());
+            bookDTO = BookMapper.getInstance().toDto(bookExist.get());
 
-        }else{
-            throw  new BadRequestException("Something went wrong!!!!, check all filed of book request");
+        } else {
+            throw new BadRequestException("Something went wrong!!!!, check all filed of book request");
         }
         return bookDTO;
     }
@@ -124,13 +107,12 @@ public class BookServiceImpl implements IBookService {
     public BookDTO deleteBook(String slug, Long id) {
         BookDTO bookDTO;
         Optional<Book> bookExist = Optional.ofNullable(bookRepository.getBookBySlugId(slug, id));
-        if(bookExist.isPresent()){
+        if (bookExist.isPresent()) {
             bookExist.get().setStatus(false);
             bookRepository.save(bookExist.get());
-            bookDTO=BookMapper.getInstance().toDto(bookExist.get());
-        }
-        else{
-            throw  new NotFoundException("Not found book by slug and id, check again");
+            bookDTO = BookMapper.getInstance().toDto(bookExist.get());
+        } else {
+            throw new NotFoundException("Not found book by slug and id, check again");
         }
         return bookDTO;
     }

@@ -1,8 +1,6 @@
 package com.practice.projectlibrary.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -11,13 +9,12 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "loans")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Loan {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Loan extends BaseEntity {
+
 
     @Column(name = "book_id")
     private Long bookId;
@@ -39,15 +36,7 @@ public class Loan {
     private Timestamp dataDue;
 
     @Null
-    @Column(name="date_returned",nullable = true)
+    @Column(name = "date_returned", nullable = true)
     private Timestamp dateReturned;
-
-    @CreationTimestamp
-    @Column(name = "created_at",updatable = false)
-//    @Temporal(value = TemporalType.TIMESTAMP)
-    private Timestamp createdAt;
-    @Column(name = "created_by")
-    private String createdBy;
-
 
 }

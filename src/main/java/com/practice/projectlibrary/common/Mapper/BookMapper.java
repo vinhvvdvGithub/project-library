@@ -2,6 +2,7 @@ package com.practice.projectlibrary.common.Mapper;
 
 
 import com.practice.projectlibrary.dto.BookDTO;
+import com.practice.projectlibrary.dto.request.BookRequest;
 import com.practice.projectlibrary.entity.Book;
 
 public class BookMapper {
@@ -14,7 +15,22 @@ public class BookMapper {
         return INSTANCE;
     }
 
-    //to book entity
+    //to book entity from request
+    public Book toEntity(BookRequest  bookRequest) {
+        Book book = new Book();
+        book.setBookTitle(bookRequest.getBookTitle());
+        book.setAuthor(bookRequest.getAuthor());
+        book.setDescription(bookRequest.getDescription());
+        book.setSlug(bookRequest.getSlug());
+        book.setImage(bookRequest.getImage());
+        book.setQuantity(bookRequest.getQuantity());
+        book.setPrice(bookRequest.getPrice());
+        return book;
+
+    }
+
+
+    //to book entity from dto
     public Book toEntity(BookDTO bookDTO) {
         Book book = new Book();
         book.setBookTitle(bookDTO.getBookTitle());

@@ -1,9 +1,6 @@
 package com.practice.projectlibrary.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,19 +10,17 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "books")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Book {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Book extends BaseEntity {
 
     @Column(name = "book_title")
     @NotBlank(message = "Book's title is mandatory")
     private String bookTitle;
 
-    @Column(name="author")
+    @Column(name = "author")
     @NotBlank(message = "Author's name is mandatory")
     private String author;
 
@@ -38,11 +33,11 @@ public class Book {
 
     private String image;
 
-//    @NotBlank(message = "Quantity is mandatory")
+    //    @NotBlank(message = "Quantity is mandatory")
     private Integer quantity;
 
 
-//    @NotBlank
+    //    @NotBlank
     private Long price;
 
 
@@ -52,22 +47,6 @@ public class Book {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")
     private Category category;
-
-
-    @Column(name = "created_at")
-//    @Temporal(value = TemporalType.TIMESTAMP)
-    private Timestamp createdAt;
-
-    @Column(name = "created_by")
-    private String createdBy;
-
-    @Column(name = "updated_at")
-//    @Temporal(value = TemporalType.TIMESTAMP)
-    private Timestamp updatedAt;
-
-    @Column(name = "updated_by")
-    private String updatedBy;
-
 
 
 }

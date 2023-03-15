@@ -2,8 +2,6 @@ package com.practice.projectlibrary.controller;
 
 import com.practice.projectlibrary.dto.LoanDTO;
 import com.practice.projectlibrary.dto.request.LoanRequest;
-import com.practice.projectlibrary.dto.respone.LoanRespone;
-import com.practice.projectlibrary.entity.Loan;
 import com.practice.projectlibrary.service.ILoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,31 +17,31 @@ public class LoanController {
     private ILoanService loanService;
 
     @GetMapping("/")
-    public List<LoanDTO> loans(){
+    public List<LoanDTO> loans() {
         return loanService.loans();
     }
 
     @PostMapping("/addloan")
     @ResponseStatus(HttpStatus.OK)
-    public LoanDTO addLoan(@RequestBody LoanRequest loanRequest){
+    public LoanDTO addLoan(@RequestBody LoanRequest loanRequest) {
         return loanService.addLoan(loanRequest);
     }
 
     @PostMapping("/add-list-loan")
     @ResponseStatus(HttpStatus.OK)
-    public List<LoanDTO> addListLoan(@RequestBody List<LoanRequest> loanRequest){
+    public List<LoanDTO> addListLoan(@RequestBody List<LoanRequest> loanRequest) {
         return loanService.addListLoan(loanRequest);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public LoanDTO deleteLoan(@PathVariable("id") Long id){
+    public LoanDTO deleteLoan(@PathVariable("id") Long id) {
         return loanService.deleteLoan(id);
     }
 
     @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public LoanDTO userToReturn(@PathVariable("id") Long id){
+    public LoanDTO userToReturn(@PathVariable("id") Long id) {
         return loanService.userToReturn(id);
     }
 
