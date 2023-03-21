@@ -38,8 +38,5 @@ public class AuthServiceImpl implements IAuthService {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
     }
-//    @Override
-//    public ResponseEntity<String> signin(LoginRequest loginRequest) {
-//        return null;
-//    }
+
 }

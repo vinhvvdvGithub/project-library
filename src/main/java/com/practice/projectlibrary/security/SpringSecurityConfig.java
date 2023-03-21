@@ -23,18 +23,18 @@ public class SpringSecurityConfig {
         this.userDetailsService = userDetailsService;
     }
 
-//    @Bean
-//    public UserDetailsService  userDetailsService(){
-//        return new MyUserDetailSeviceImpl();
-//    }
+    @Bean
+    public UserDetailsService  userDetailsService(){
+        return new MyUserDetailSeviceImpl();
+    }
 
-//    @Bean
-//    public DaoAuthenticationProvider authenticationProvider(){
-//        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-//        authenticationProvider.setUserDetailsService(userDetailsService());
-//        authenticationProvider.setPasswordEncoder(passwordEncoder());
-//        return authenticationProvider;
-//    }
+    @Bean
+    public DaoAuthenticationProvider authenticationProvider(){
+        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService());
+        authenticationProvider.setPasswordEncoder(passwordEncoder());
+        return authenticationProvider;
+    }
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
@@ -55,6 +55,7 @@ public class SpringSecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/v1/auth/signin","/api/v1/users/register").permitAll()
                 .antMatchers("/api/v1/categories/*","/api/v1/books/*").hasAuthority("admin")
+//                .antMatchers("/api/v1/categories/*","/api/v1/books/*").hasRole("admin")
 
 
                 .anyRequest().authenticated()
