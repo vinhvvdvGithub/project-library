@@ -10,10 +10,17 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface IUserRepository extends JpaRepository<User,Long> {
+public interface IUserRepository extends JpaRepository<User, Long> {
     Optional<User> findUserById(Long id);
 
-    @Query(value = "Select * from users where email = :email",nativeQuery = true)
+
+    @Query(value = "select * from users where username=:username or email=:username", nativeQuery = true)
+    User getUserByUsernameEndEmail(@Param("username") String username);
+
+//    @Query(value = "select * from users where ")
+//    Optional<User> findUserByUsernameOrEmailAAndActiveIsTrue(String username,String email);
+
+    @Query(value = "Select * from users where active=true AND email = :email", nativeQuery = true)
     Optional<User> findUserByEmail(@Param("email") String email);
 
 //    @Modifying

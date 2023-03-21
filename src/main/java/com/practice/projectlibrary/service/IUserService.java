@@ -1,5 +1,7 @@
 package com.practice.projectlibrary.service;
 
+import com.practice.projectlibrary.dto.UserDTO;
+import com.practice.projectlibrary.dto.request.LoginRequest;
 import com.practice.projectlibrary.dto.request.UserRequest;
 import com.practice.projectlibrary.dto.respone.UserRespone;
 import com.practice.projectlibrary.entity.User;
@@ -17,4 +19,12 @@ public interface IUserService {
     void deleteUserByEmail(String email);
 
     public Integer saveUser(User user);
+
+
+    //login
+    UserDTO login(LoginRequest loginRequest);
+
+    //register
+    UserDTO regisger(UserRequest userRequest);
+
 }

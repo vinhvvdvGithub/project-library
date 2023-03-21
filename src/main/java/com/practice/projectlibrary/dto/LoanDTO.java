@@ -33,10 +33,5 @@ public class LoanDTO {
 
     private Timestamp dateReturned;
 
-    //DTO contructor for request from client
-    public LoanDTO(Long bookId, Long userId, Integer quantity) {
-        this.bookId = bookId;
-        this.userId = userId;
-        this.quantity = quantity;
-    }
+
 }

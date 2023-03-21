@@ -1,10 +1,12 @@
 package com.practice.projectlibrary.controller;
 
+import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.UserRequest;
 import com.practice.projectlibrary.dto.respone.UserRespone;
 import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.service.IUserService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,11 +16,21 @@ import java.util.Optional;
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("api/v1/users")
+@RequestMapping("/api/v1/users")
 public class UserController {
 
-
+    @Autowired
     private IUserService userService;
+
+    @PostMapping("/register")
+    public UserDTO register(@RequestBody UserRequest userRequest){
+        return userService.regisger(userRequest);
+    }
+
+    @PostMapping("/login")
+    public UserDTO login(@RequestBody UserRequest userRequest){
+        return userService.regisger(userRequest);
+    }
 
 //    @GetMapping("")
 //    public List<UserRespone> users(){
