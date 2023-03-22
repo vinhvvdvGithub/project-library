@@ -14,6 +14,8 @@ import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
@@ -22,6 +24,7 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -37,74 +40,51 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
     @Override
-    public List<UserRespone> users() {
+    public List<UserDTO> users() {
 
         return userRepository.findAll().stream().map(
-                user -> new UserRespone(user.getEmail(), user.getUsername(), user.getCreatedAt())
+                user -> UserMapper.getInstance().toDTO(user)
         ).collect(Collectors.toList());
+
     }
 
     @Override
-    public UserRespone addUser(UserRequest userRequest) {
+    public UserDTO addUser(UserRequest userRequest) {
         User user = new User();
         user.setUsername(userRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
         user.setEmail(userRequest.getEmail());
-        user.setPassword(userRequest.getPassword());
+        user.setAvatar("");
         user.setActive(true);
-        user.setCreatedAt(new Timestamp(System.currentTimeMillis()));
+        user.setCreatedBy("Librian");
+
+        Set<Role> role = roleRepository.getRoleByRoleId(userRequest.getRoleId());
+        user.setRoles(role);
+
         userRepository.save(user);
 
-
-        UserRespone userRespone = new UserRespone();
-        userRespone.setEmail(userRequest.getEmail());
-        userRespone.setUsername(userRequest.getUsername());
-        return userRespone;
+        return UserMapper.getInstance().toDTO(user);
     }
 
     @Override
-    public Optional<User> findByEmail(String email) {
+    public UserDTO findByEmail(String email) {
         Optional<User> user = userRepository.findUserByEmail(email);
         if (user.isEmpty()) {
             throw new RuntimeException("Not found user by id");
         }
-        return Optional.of(user.get());
+        return UserMapper.getInstance().toDTO(user.get());
     }
 
     @Transactional
     public void deleteUserByEmail(String email) {
-        userRepository.deleteUserByEmail(email);
-    }
-
-    @Override
-    public Integer saveUser(User user) {
-        return null;
-    }
-
-    @Override
-    public UserDTO login(LoginRequest loginRequest) {
-        Optional<User> userExist = userRepository.findUserByEmail(loginRequest.getEmail());
-
-        if(userExist.isPresent()){
-            UsernamePasswordAuthenticationFilter usernamePasswordAuthenticationFilter = new UsernamePasswordAuthenticationFilter();
-
+        Optional<User> user = userRepository.findUserByEmail(email);
+        if (user.isEmpty()) {
+            throw new RuntimeException("Not found user by id");
+        } else {
+            user.get().setActive(false);
         }
-
-        return null;
-    }
-
-    @Override
-    public UserDTO regisger(UserRequest userRequest) {
-        User user = new User();
-        user = UserMapper.getInstance().toEntity(userRequest);
-        user.setPassword(passwordEncoder.encode(userRequest.getPassword()));
-        user.setRoles(roleRepository.getRoleByRoleId(userRequest.getRoleId()));
-        user.setAvatar("");
-        user.setActive(true);
-        user.setUpdatedBy("Librian");
-        userRepository.save(user);
-
-        return UserMapper.getInstance().toDTO(user);
     }
 
 

@@ -53,7 +53,8 @@ public class SpringSecurityConfig {
 //        http.authenticationProvider(authenticationProvider());
         http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/auth/signin","/api/v1/users/register").permitAll()
+                .antMatchers("/api/v1/auth/*","/api/v1/users/register").permitAll()
+                .antMatchers("/api/v1/roles/*").permitAll()
                 .antMatchers("/api/v1/categories/*","/api/v1/books/*").hasAuthority("admin")
 //                .antMatchers("/api/v1/categories/*","/api/v1/books/*").hasRole("admin")
 

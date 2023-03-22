@@ -10,21 +10,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface IUserService {
-    List<UserRespone> users();
+    List<UserDTO> users();
 
-    UserRespone addUser(UserRequest userRequest);
+    UserDTO addUser(UserRequest userRequest);
 
-    Optional<User> findByEmail(String email);
+    UserDTO findByEmail(String email);
 
     void deleteUserByEmail(String email);
 
-    public Integer saveUser(User user);
-
-
-    //login
-    UserDTO login(LoginRequest loginRequest);
-
-    //register
-    UserDTO regisger(UserRequest userRequest);
 
 }

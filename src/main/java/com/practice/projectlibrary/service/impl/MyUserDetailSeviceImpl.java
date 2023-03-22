@@ -22,23 +22,15 @@ public class MyUserDetailSeviceImpl implements UserDetailsService {
     @Autowired
     private IUserRepository userRepository;
 
-//    public MyUserDetailSeviceImpl(IUserRepository userRepository){
-//        this.userRepository=userRepository;
-//    }
-//
+
 
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
         User user = userRepository.getUserByUsernameEndEmail(usernameOrEmail);
-//        Optional<User> user = userRepository.findUserByUsernameOrEmailAAndActiveIsTrue(usernameOrEmail, usernameOrEmail);
-//        List<SimpleGrantedAuthority> grantedAuthorities = user.().map(authority -> new SimpleGrantedAuthority(authority)).collect(Collectors.toList());
         if (user == null) {
             throw new UsernameNotFoundException("Not found user by username or email");
         }
 
-//        Set<GrantedAuthority> authorities = user.get().getRoles().stream().map(
-//                role -> new SimpleGrantedAuthority(role.getRoleName())
-//        ).collect(Collectors.toSet());
         Set<GrantedAuthority> authorities = user.getRoles().stream().map(
                 role -> new SimpleGrantedAuthority(role.getRoleName())
         ).collect(Collectors.toSet());

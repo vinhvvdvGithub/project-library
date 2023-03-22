@@ -15,7 +15,7 @@ public class LoginRequest {
     @NotEmpty(message = "Email or Username is mandatory")
     @NotNull
     @NotBlank
-    private String email;
+    private String emailOrUsername;
 
     @NotEmpty(message = "password is mandatory")
     @NotNull

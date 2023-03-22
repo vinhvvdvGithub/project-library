@@ -1,7 +1,10 @@
 package com.practice.projectlibrary.controller;
 
+import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.LoginRequest;
 
+import com.practice.projectlibrary.dto.request.RegisterRequest;
+import com.practice.projectlibrary.dto.request.UserRequest;
 import com.practice.projectlibrary.service.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,8 +25,17 @@ public class AuthController {
 
     @PostMapping("/signin")
     public ResponseEntity<String> signin(@RequestBody LoginRequest loginRequest) {
-
         return authService.signin(loginRequest);
+    }
+
+    @PostMapping("/login")
+    public UserDTO login(@RequestBody LoginRequest loginRequest){
+        return authService.login(loginRequest);
+    }
+
+    @PostMapping("/register")
+    public UserDTO register(@RequestBody RegisterRequest RegisterRequest){
+        return authService.regisger(RegisterRequest);
     }
 
 
