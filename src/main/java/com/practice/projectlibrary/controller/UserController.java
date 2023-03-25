@@ -2,18 +2,16 @@ package com.practice.projectlibrary.controller;
 
 import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.UserRequest;
-import com.practice.projectlibrary.dto.respone.UserRespone;
-import com.practice.projectlibrary.entity.User;
-import com.practice.projectlibrary.service.IAuthService;
+
 import com.practice.projectlibrary.service.IUserService;
+import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Email;
 import java.util.List;
-import java.util.Optional;
+
 
 @RestController
 @AllArgsConstructor

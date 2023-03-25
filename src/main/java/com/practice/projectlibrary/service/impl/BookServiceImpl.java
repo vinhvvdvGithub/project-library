@@ -5,6 +5,7 @@ import com.practice.projectlibrary.dto.BookDTO;
 import com.practice.projectlibrary.dto.request.BookRequest;
 import com.practice.projectlibrary.entity.Book;
 import com.practice.projectlibrary.entity.Category;
+import com.practice.projectlibrary.entity.MyUserDetail;
 import com.practice.projectlibrary.exception.BadRequestException;
 import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.IBookRepository;
@@ -12,6 +13,10 @@ import com.practice.projectlibrary.repository.ICategoryRepository;
 import com.practice.projectlibrary.service.IBookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 
@@ -29,6 +34,8 @@ public class BookServiceImpl implements IBookService {
 
     @Autowired
     private ICategoryRepository categoryRepository;
+
+
 
 
     //list book from db return to client DTO format
@@ -51,7 +58,12 @@ public class BookServiceImpl implements IBookService {
         book = BookMapper.getInstance().toEntity(bookRequest);
         book.setStatus(true);
         book.setCategory(categoryRepository.getById(bookRequest.getCategoryId()));
-        book.setCreatedBy("Librarian");
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String currentPrincipalName = authentication.getName();
+
+//        book.setCreatedBy("Librarian");
+        book.setCreatedBy(currentPrincipalName);
 
         bookRepository.save(book);
 
@@ -69,6 +81,7 @@ public class BookServiceImpl implements IBookService {
             book = BookMapper.getInstance().toEntity(bookReq);
             book.setStatus(true);
             book.setCategory(categoryRepository.getById(bookReq.getCategoryId()));
+
             book.setCreatedBy("Librarian");
 
             bookRepository.save(book);

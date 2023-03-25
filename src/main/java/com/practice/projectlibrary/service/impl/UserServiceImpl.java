@@ -2,26 +2,24 @@ package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.UserMapper;
 import com.practice.projectlibrary.dto.UserDTO;
-import com.practice.projectlibrary.dto.request.LoginRequest;
+
 import com.practice.projectlibrary.dto.request.UserRequest;
-import com.practice.projectlibrary.dto.respone.UserRespone;
+
 import com.practice.projectlibrary.entity.Role;
 import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.repository.IRoleRepository;
 import com.practice.projectlibrary.repository.IUserRepository;
 import com.practice.projectlibrary.service.IUserService;
+import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.core.context.SecurityContext;
-import org.springframework.security.core.context.SecurityContextHolder;
+;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
-import java.sql.Timestamp;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

@@ -1,18 +1,15 @@
 package com.practice.projectlibrary.dto.request;
 
-import com.practice.projectlibrary.entity.Category;
+
+import jakarta.validation.constraints.*;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class BookRequest {
-
 
     @NotEmpty(message = "Book's title is mandatory")
     private String bookTitle;
@@ -29,12 +26,12 @@ public class BookRequest {
 
     private String image;
 
-    @NotEmpty(message = "Quantiry is mandatory")
+    @NotNull(message = "Quantity is mandatory")
     private Integer quantity;
 
-    @NotEmpty(message = "Price is mandatory")
+    @NotNull(message = "Price is mandatory")
     private Long price;
 
-    @NotEmpty(message = "CategoryId is mandatory")
+    @NotNull(message = "CategoryId is mandatory")
     private Long categoryId;
 }

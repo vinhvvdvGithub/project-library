@@ -1,13 +1,13 @@
 package com.practice.projectlibrary.entity;
 
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import lombok.*;
 import org.springframework.lang.Nullable;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotNull;
+
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;

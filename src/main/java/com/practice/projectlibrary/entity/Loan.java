@@ -1,10 +1,9 @@
 package com.practice.projectlibrary.entity;
 
+import jakarta.validation.constraints.Null;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
-import javax.persistence.*;
-import javax.validation.constraints.Null;
+import jakarta.persistence.*;
 import java.sql.Timestamp;
 
 @Entity

@@ -39,4 +39,10 @@ public class AuthController {
     }
 
 
+    @PostMapping("/login-jwt")
+    public ResponseEntity<String> loginJWT(@RequestBody LoginRequest loginRequest){
+        return authService.loginJWT(loginRequest);
+    }
+
+
 }

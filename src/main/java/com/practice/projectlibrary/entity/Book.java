@@ -1,12 +1,10 @@
 package com.practice.projectlibrary.entity;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
-import java.sql.Timestamp;
+import jakarta.persistence.*;
+
 
 @Entity
 @Table(name = "books")

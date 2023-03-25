@@ -2,7 +2,7 @@ package com.practice.projectlibrary.dto.request;
 
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.*;
 
 @Getter
 @Setter

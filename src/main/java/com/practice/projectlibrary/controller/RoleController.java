@@ -3,8 +3,10 @@ package com.practice.projectlibrary.controller;
 import com.practice.projectlibrary.dto.RoleDTO;
 import com.practice.projectlibrary.dto.request.RoleRequest;
 import com.practice.projectlibrary.service.IRoleService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.List;
 
@@ -26,13 +28,13 @@ public class RoleController {
     }
 
     @PostMapping("/")
-    public RoleDTO addRole(@RequestBody RoleRequest roleRequest){
+    public RoleDTO addRole(@Valid @RequestBody RoleRequest roleRequest){
         return roleService.addRole(roleRequest);
     }
 
 
     @PutMapping("/{id}")
-    public RoleDTO updateRole(@RequestBody RoleRequest roleRequest,@PathVariable("id") Long id){
+    public RoleDTO updateRole(@Valid @RequestBody RoleRequest roleRequest, @PathVariable("id") Long id){
         return roleService.updateRole(id,roleRequest);
     }
 
