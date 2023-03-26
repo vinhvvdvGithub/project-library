@@ -8,6 +8,7 @@ import com.practice.projectlibrary.exception.BadRequestException;
 
 import com.practice.projectlibrary.service.IBookService;
 import com.practice.projectlibrary.service.ICategorySevice;
+import jakarta.annotation.security.RolesAllowed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

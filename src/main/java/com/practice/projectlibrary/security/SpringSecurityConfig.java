@@ -6,10 +6,12 @@ import com.practice.projectlibrary.service.impl.MyUserDetailSeviceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -20,6 +22,11 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableGlobalMethodSecurity(
+        securedEnabled = true,
+        jsr250Enabled = true,
+        prePostEnabled = true
+)
 @RequiredArgsConstructor
 public class SpringSecurityConfig {
 
@@ -27,9 +34,6 @@ public class SpringSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
 
-//    public SpringSecurityConfig(UserDetailsService userDetailsService) {
-//        this.userDetailsService = userDetailsService;
-//    }
 
     @Bean
     public UserDetailsService userDetailsService() {
@@ -64,9 +68,12 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests()
                 .requestMatchers("/api/v1/auth/**","/api/v1/roles/**","/api/v1/users/**")
                 .permitAll()
-                .requestMatchers("/api/v1/books/*")
-//                .requestMatchers("/api/v1/roles/*", "/api/v1/users/*", "/api/v1/categories/*", "/api/v1/books/*")
+                .requestMatchers(HttpMethod.GET,"/api/v1/books/**")
+                .permitAll()
+                .requestMatchers(HttpMethod.POST,"/api/v1/books/**")
                 .hasAuthority("admin")
+//                .requestMatchers("/api/v1/roles/*", "/api/v1/users/*", "/api/v1/categories/*", "/api/v1/books/*")
+//                .hasAuthority("admin")
                 .anyRequest()
                 .authenticated()
                 .and()
