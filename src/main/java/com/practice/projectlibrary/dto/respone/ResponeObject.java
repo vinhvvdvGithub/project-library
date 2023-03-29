@@ -1,14 +1,13 @@
 package com.practice.projectlibrary.dto.respone;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.http.HttpStatus;
 
 
 
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class ResponeObject {

@@ -5,6 +5,7 @@ import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.LoginRequest;
 import com.practice.projectlibrary.dto.request.RegisterRequest;
 import com.practice.projectlibrary.dto.request.UserRequest;
+import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
 import com.practice.projectlibrary.entity.MyUserDetail;
 import com.practice.projectlibrary.entity.Role;
 import com.practice.projectlibrary.entity.User;
@@ -36,12 +37,14 @@ public class AuthServiceImpl implements IAuthService {
 
     private final IUserRepository userRepository;
 
-
     private final IRoleRepository roleRepository;
 
     private final JwtService jwtService;
 
+    private final RefreshTokenService refreshTokenService;
     private final PasswordEncoder passwordEncoder;
+
+
 
 
     @Override
@@ -84,19 +87,20 @@ public class AuthServiceImpl implements IAuthService {
         user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
 
         //set role member
-        Set<Role> role = roleRepository.getRoleByRoleId(1);
+//        Set<Role> role = roleRepository.getRoleByRoleId(1);
+        Set<Role> role = roleRepository.getRoleBySlug("member");
 
         user.setRoles(role);
         user.setAvatar("");
         user.setActive(true);
-        user.setUpdatedBy("Librian");
+        user.setUpdatedBy("Librarian");
         userRepository.save(user);
 
         return UserMapper.getInstance().toDTO(user);
     }
 
     @Override
-    public ResponseEntity<String> loginJWT(LoginRequest loginRequest) {
+    public ResponseEntity<RefreshTokenRespone> loginJWT(LoginRequest loginRequest) {
         User userExist = userRepository.getUserByUsernameEndEmail(loginRequest.getEmailOrUsername());
 
 
@@ -112,10 +116,11 @@ public class AuthServiceImpl implements IAuthService {
 
         if (authentication != null){
             String jwt = jwtService.generateToken(userLogged);
-            return ResponseEntity.ok(jwt);
+            String refreshToken = refreshTokenService.generateRefreshToken(userExist.getId()).getRefreshToken();
+            return ResponseEntity.ok().body(new RefreshTokenRespone(jwt,refreshToken,"Bearer"));
         }
 
-        return ResponseEntity.ok().body("fail");
+        return ResponseEntity.ok().body(new RefreshTokenRespone("Error!!","Error!!","Bearer"));
     }
 
     @Override

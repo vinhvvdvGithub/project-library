@@ -20,6 +20,8 @@ public class BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+//    private boolean active;
+
 //    @Column(name = "created_date")
 //    private Timestamp createdDate;
 

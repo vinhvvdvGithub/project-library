@@ -5,6 +5,7 @@ import com.practice.projectlibrary.dto.request.LoginRequest;
 
 import com.practice.projectlibrary.dto.request.RegisterRequest;
 import com.practice.projectlibrary.dto.request.UserRequest;
+import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
 import com.practice.projectlibrary.service.IAuthService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -40,7 +41,7 @@ public class AuthController {
 
 
     @PostMapping("/login-jwt")
-    public ResponseEntity<String> loginJWT(@RequestBody LoginRequest loginRequest){
+    public ResponseEntity<RefreshTokenRespone> loginJWT(@RequestBody LoginRequest loginRequest){
         return authService.loginJWT(loginRequest);
     }
 

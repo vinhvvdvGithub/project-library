@@ -33,6 +33,19 @@ public class JwtService {
         return extractClaim(jwtToken,Claims::getSubject);
     }
 
+    public String generateAccessTokenFromRefreshToken(String userName){
+        Date now = new Date();
+        Date expiryDate = new Date(now.getTime() + jwtExpirationInMs);
+
+        //mã hóa token
+        return Jwts.builder()
+                .setSubject(userName)
+                .setIssuedAt(new Date())
+                .setExpiration(expiryDate)
+                .signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+                .compact();
+    }
+
     public String generateToken(UserDetails userDetail){
         return generateToken(new HashMap<>(),userDetail);
     }
@@ -43,8 +56,7 @@ public class JwtService {
                 .setClaims(extractClaims)
                 .setSubject(userDetail.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 24))
-//                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
+                .setExpiration(new Date(System.currentTimeMillis() + jwtExpirationInMs))
                 .signWith(getSignInKey(), SignatureAlgorithm.HS256)
                 .compact();
     }

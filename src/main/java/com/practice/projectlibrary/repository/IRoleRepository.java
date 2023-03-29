@@ -17,10 +17,12 @@ public interface IRoleRepository extends JpaRepository<Role,Long> {
 
     @Query(value = "select * from roles where slug = :slug",nativeQuery = true)
     List<Role> roleDetail(@Param("slug") String slug);
-    @Query(value = "select * from roles where slug = :slug",nativeQuery = true)
+    @Query(value = "select * from roles where slug = :slug and status=true",nativeQuery = true)
     Set<Role> getRoleBySlug(@Param("slug")String slug);
 
     @Query(value = "select * from roles where id = :id",nativeQuery = true)
     Set<Role> getRoleByRoleId(@Param("id")Integer id);
+
+
 
 }
