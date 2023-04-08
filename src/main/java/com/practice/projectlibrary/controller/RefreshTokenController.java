@@ -3,7 +3,9 @@ package com.practice.projectlibrary.controller;
 import com.practice.projectlibrary.dto.request.RefreshTokenRequest;
 import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
 import com.practice.projectlibrary.service.IRefreshTokenService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -15,9 +17,14 @@ public class RefreshTokenController {
 
 
   @PostMapping("/new-accesstoken")
-  public RefreshTokenRespone newAccessToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+  @ResponseStatus(HttpStatus.OK)
+  public RefreshTokenRespone newAccessToken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest) {
     return refreshTokenService.generateAccessToken(refreshTokenRequest);
   }
 
-
+  @DeleteMapping("/{userId}")
+  @ResponseStatus(HttpStatus.OK)
+  public int deleteRefreshToken(@Valid @PathVariable(value = "userId",required = true) Long userId){
+    return refreshTokenService.deteleByUserId(userId);
+  }
 }

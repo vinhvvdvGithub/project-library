@@ -1,6 +1,6 @@
 package com.practice.projectlibrary.entity;
 
-import lombok.Getter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -9,23 +9,26 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+@Getter
+@Setter
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class MyUserDetail implements UserDetails {
-
     private User user;
 
-    public MyUserDetail(User user){
-        this.user = user;
-    }
+//    Set<GrantedAuthority> authorities=null;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Set<Role> roles = user.getRoles();
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        for (Role role : roles){
-            authorities.add(new SimpleGrantedAuthority( role.getRoleName()));
+        for (Role role : roles) {
+            authorities.add(new SimpleGrantedAuthority(role.getRoleName()));
         }
-
         return authorities;
     }
 

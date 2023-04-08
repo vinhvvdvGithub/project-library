@@ -11,11 +11,17 @@ import java.util.Optional;
 
 @Repository
 public interface IUserRepository extends JpaRepository<User, Long> {
+
+
     Optional<User> findUserById(Long id);
 
+    Boolean existsUserByEmail(String email);
 
-    @Query(value = "select * from users where username=:username or email=:username", nativeQuery = true)
-    User getUserByUsernameEndEmail(@Param("username") String username);
+    Boolean existsUserByUsername(String userName);
+
+
+    @Query(value = "select * from users where active=true and username=:username or email=:username", nativeQuery = true)
+    Optional<User> getUserByUsernameAndEmail(@Param("username") String username);
 
 //    @Query(value = "select * from users where ")
 //    Optional<User> findUserByUsernameOrEmailAAndActiveIsTrue(String username,String email);

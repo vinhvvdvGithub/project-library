@@ -4,6 +4,7 @@ import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.UserRequest;
 
 import com.practice.projectlibrary.service.IUserService;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class UserController {
     }
 
     @PostMapping("/add-user")
-    public UserDTO addUser(@RequestBody UserRequest userRequest){
+    public UserDTO addUser(@RequestBody @Valid UserRequest userRequest){
         return userService.addUser(userRequest);
     }
 

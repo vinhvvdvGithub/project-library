@@ -3,6 +3,7 @@ package com.practice.projectlibrary.controller;
 import com.practice.projectlibrary.dto.LoanDTO;
 import com.practice.projectlibrary.dto.request.LoanRequest;
 import com.practice.projectlibrary.service.ILoanService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class LoanController {
 
     @PostMapping("/addloan")
     @ResponseStatus(HttpStatus.OK)
-    public LoanDTO addLoan(@RequestBody LoanRequest loanRequest) {
+    public LoanDTO addLoan(@RequestBody @Valid LoanRequest loanRequest) {
         return loanService.addLoan(loanRequest);
     }
 

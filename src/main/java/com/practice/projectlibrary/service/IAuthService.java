@@ -10,18 +10,12 @@ import org.springframework.http.ResponseEntity;
 
 public interface IAuthService {
 
-    ResponseEntity<String> signin(LoginRequest loginRequest);
-
-    //login
-    UserDTO login(LoginRequest loginRequest);
 
     //register
     UserDTO regisger(RegisterRequest registerRequest);
 
 
     //login
-    ResponseEntity<RefreshTokenRespone> loginJWT(LoginRequest loginRequest);
+    ResponseEntity<RefreshTokenRespone> login(LoginRequest loginRequest);
 
-    //register
-    ResponseEntity<String> regisgerJWT(RegisterRequest registerRequest);
 }

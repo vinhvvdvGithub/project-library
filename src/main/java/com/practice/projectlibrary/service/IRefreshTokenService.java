@@ -11,7 +11,7 @@ public interface IRefreshTokenService {
 
   RefreshTokenRespone generateAccessToken(RefreshTokenRequest refreshTokenRequest);
 
-  RefreshTokenRespone generateRefreshToken(Long userId);
+  RefreshTokenRespone generateRefreshToken(Long userId,String userNameOrEmail);
 
   RefreshToken verifyExpiration(RefreshToken token);
 

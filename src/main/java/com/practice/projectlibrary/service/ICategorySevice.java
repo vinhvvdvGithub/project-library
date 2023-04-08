@@ -13,15 +13,12 @@ public interface ICategorySevice {
     //add new category
     CategoryDTO addCategory(CategoryRequest categoryRequest);
 
-
     //add new list  category
     List<CategoryDTO> addListCategory(List<CategoryRequest> categoryRequest);
 
 
-
     //update category by slug && id
     CategoryDTO updateCategory(String categorySlug, Long id,CategoryRequest categoryRequest);
-
 
 
     //delete category by slug && id

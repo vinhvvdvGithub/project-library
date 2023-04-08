@@ -1,7 +1,8 @@
 package com.practice.projectlibrary.exception;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.validation.BindException;
+
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -14,6 +15,7 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class CustomExceptionHandler {
+
 
     //not found exception
     @ExceptionHandler(NotFoundException.class)
@@ -29,16 +31,12 @@ public class CustomExceptionHandler {
         return new ErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
     }
 
-//    //validation exception, haven't finished
-//    @ExceptionHandler(BindException.class)
-//    @ResponseStatus(HttpStatus.BAD_REQUEST)
-//    public ErrorMessage handlerBindException(BindException ex){
-//        String errorMessage = "Request không hợp lệ";
-//        if (ex.getBindingResult().hasErrors())
-//            ex.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-//        return new ErrorMessage(HttpStatus.BAD_REQUEST,errorMessage);
-//
-//    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(BadCredentialsException.class)
+    public ErrorMessage handleBadCredentialsException(BadCredentialsException ex, WebRequest web) {
+        return new ErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -52,4 +50,40 @@ public class CustomExceptionHandler {
         });
         return errors;
     }
+
+    @ExceptionHandler(TokenRefreshException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ErrorMessage handleTokenRefreshException(TokenRefreshException ex, WebRequest web) {
+        return new ErrorMessage(HttpStatus.BAD_REQUEST, ex.getMessage());
+    }
+
+
+    @ExceptionHandler(TokenException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage handleTokenException(Exception ex, WebRequest web) {
+        return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
+
+
+    //exception chua khai bao
+    @ExceptionHandler(Exception.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage handleException(Exception ex, WebRequest web) {
+        return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
+
+    //exception for auth service
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ErrorMessage handleAuthenticationException(Exception ex, WebRequest web){
+        return new ErrorMessage(HttpStatus.UNAUTHORIZED, ex.getMessage());
+    }
+
+    @ExceptionHandler(UserExistException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorMessage handleUserExistException(Exception ex, WebRequest web){
+        return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+    }
+
+
 }

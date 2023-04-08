@@ -6,6 +6,7 @@ import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.repository.IUserRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.parameters.P;
@@ -30,16 +31,18 @@ public class MyUserDetailSeviceImpl implements UserDetailsService {
     @Transactional // protect LazyInitializationException
     @Override
     public UserDetails loadUserByUsername(String usernameOrEmail) throws UsernameNotFoundException {
-        User user = userRepository.getUserByUsernameEndEmail(usernameOrEmail);
-        if (user == null) {
+        Optional<User> user = userRepository.getUserByUsernameAndEmail(usernameOrEmail);
+
+
+        if (!user.isPresent()) {
             throw new UsernameNotFoundException("Not found user by username or email");
+        } else {
+            Set<GrantedAuthority> authorities = user.get().getRoles().stream().map(
+                    role -> new SimpleGrantedAuthority(role.getRoleName())
+            ).collect(Collectors.toSet());
+            return new org.springframework.security.core.userdetails.User(user.get().getEmail(), user.get().getPassword(), authorities);
         }
 
-        Set<GrantedAuthority> authorities = user.getRoles().stream().map(
-                role -> new SimpleGrantedAuthority(role.getRoleName())
-        ).collect(Collectors.toSet());
-
-
-        return new org.springframework.security.core.userdetails.User(user.getEmail(), user.getPassword(), authorities);
     }
+
 }

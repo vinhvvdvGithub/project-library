@@ -23,6 +23,7 @@ public class BookRequest {
     @NotEmpty(message = "Slug is mandatory")
     private String slug;
 
+    @NotEmpty(message = "Image is mandatory")
 
     private String image;
 

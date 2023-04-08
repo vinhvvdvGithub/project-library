@@ -35,12 +35,10 @@ public class User extends BaseEntity {
     @Email
     private String email;
 
-    //    @NotNull
     @Nullable
     private String avatar;
     //    @NotNull
     @Nullable
-
     private Boolean active;
 
 
