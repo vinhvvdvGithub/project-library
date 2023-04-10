@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -32,8 +33,8 @@ public class BookController {
 
     @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
-    public BookDTO addBook(@Valid @RequestBody BookRequest bookRequest) {
-        return bookService.addBook(bookRequest);
+    public BookDTO addBook(@RequestPart("file") MultipartFile file, @RequestPart("bookRequest")  BookRequest bookRequest) {
+        return bookService.addBook(file,bookRequest);
     }
 
     @PostMapping("/{slug}/{id}")

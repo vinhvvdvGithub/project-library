@@ -10,13 +10,16 @@ import jakarta.validation.constraints.*;
 @NoArgsConstructor
 public class LoanRequest {
 
-    @NotEmpty(message = "Book id is mandatory")
+
+    @NotNull(message = "Book id is mandatory")
     private Long bookId;
 
-    @NotEmpty(message = "User id is mandatory")
+
+    @NotNull(message = "User id is mandatory")
     private Long userId;
 
-    @NotEmpty(message = "Quantity is mandatory")
+    @NotNull(message = "Quantity is mandatory")
+//    @NotEmpty(message = "Quantity is mandatory")
     private Integer quantity;
 
 

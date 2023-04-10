@@ -2,6 +2,7 @@ package com.practice.projectlibrary.service;
 
 import com.practice.projectlibrary.dto.BookDTO;
 import com.practice.projectlibrary.dto.request.BookRequest;
+import org.springframework.web.multipart.MultipartFile;
 
 
 import java.util.List;
@@ -12,7 +13,7 @@ public interface IBookService {
     List<BookDTO> books();
 
     //add new book
-    BookDTO addBook(BookRequest bookRequest);
+    BookDTO addBook(MultipartFile file, BookRequest bookRequest);
 
     List<BookDTO> addListBook(List<BookRequest> bookRequest);
     //update book by slug && id

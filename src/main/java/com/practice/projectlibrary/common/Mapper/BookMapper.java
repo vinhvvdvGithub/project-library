@@ -22,7 +22,6 @@ public class BookMapper {
         book.setAuthor(bookRequest.getAuthor());
         book.setDescription(bookRequest.getDescription());
         book.setSlug(bookRequest.getSlug());
-        book.setImage(bookRequest.getImage());
         book.setQuantity(bookRequest.getQuantity());
         book.setPrice(bookRequest.getPrice());
         return book;

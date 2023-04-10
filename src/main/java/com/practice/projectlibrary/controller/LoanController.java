@@ -22,7 +22,7 @@ public class LoanController {
         return loanService.loans();
     }
 
-    @PostMapping("/addloan")
+    @PostMapping("/")
     @ResponseStatus(HttpStatus.OK)
     public LoanDTO addLoan(@RequestBody @Valid LoanRequest loanRequest) {
         return loanService.addLoan(loanRequest);

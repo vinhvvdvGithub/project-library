@@ -2,7 +2,6 @@ package com.practice.projectlibrary.controller;
 
 import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.LoginRequest;
-import com.practice.projectlibrary.dto.request.RefreshTokenRequest;
 import com.practice.projectlibrary.dto.request.RegisterRequest;
 import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
 import com.practice.projectlibrary.service.IAuthService;
@@ -32,16 +31,11 @@ public class AuthController {
     }
 
 
-    //refresh token route
-    @PostMapping("/new-accesstoken")
-    @ResponseStatus(HttpStatus.OK)
-    public RefreshTokenRespone newAccessToken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest) {
-        return refreshTokenService.generateAccessToken(refreshTokenRequest);
-    }
+
 
     @DeleteMapping("/{userId}")
     @ResponseStatus(HttpStatus.OK)
-    public int deleteRefreshToken(@Valid @PathVariable(value = "userId", required = true) Long userId) {
+    public int deleteRefreshToken(@Valid @PathVariable(value = "userId") Long userId) {
         return refreshTokenService.deteleByUserId(userId);
     }
 

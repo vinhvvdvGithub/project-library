@@ -22,8 +22,6 @@ public class UserController {
     @Autowired
     private IUserService userService;
 
-
-
     @GetMapping("")
     public List<UserDTO> users(){
 

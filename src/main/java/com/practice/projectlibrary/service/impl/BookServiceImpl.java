@@ -5,37 +5,30 @@ import com.practice.projectlibrary.dto.BookDTO;
 import com.practice.projectlibrary.dto.request.BookRequest;
 import com.practice.projectlibrary.entity.Book;
 import com.practice.projectlibrary.entity.Category;
-import com.practice.projectlibrary.entity.MyUserDetail;
 import com.practice.projectlibrary.exception.BadRequestException;
 import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.IBookRepository;
 import com.practice.projectlibrary.repository.ICategoryRepository;
 import com.practice.projectlibrary.service.IBookService;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.practice.projectlibrary.service.ICloudinaryService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
-
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements IBookService {
-
-    @Autowired
-    private IBookRepository bookRepository;
-
-    @Autowired
-    private ICategoryRepository categoryRepository;
-
-
+    private final IBookRepository bookRepository;
+    private final ICategoryRepository categoryRepository;
+    private final ICloudinaryService cloudinaryService;
 
 
     //list book from db return to client DTO format
@@ -52,24 +45,23 @@ public class BookServiceImpl implements IBookService {
     }
 
 
-    public BookDTO addBook(BookRequest bookRequest) {
-        BookDTO bookDTO = new BookDTO();
+    public BookDTO addBook(MultipartFile file, BookRequest bookRequest) {
+
         Book book = new Book();
         book = BookMapper.getInstance().toEntity(bookRequest);
+        String url = cloudinaryService.uploadFile(file);
+        book.setImage(url);
         book.setStatus(true);
         book.setCategory(categoryRepository.getById(bookRequest.getCategoryId()));
 
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        String currentPrincipalName = authentication.getName();
 
-//        book.setCreatedBy("Librarian");
-        book.setCreatedBy(currentPrincipalName);
+        book.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
 
         bookRepository.save(book);
 
-        bookDTO = BookMapper.getInstance().toDto(book);
+        return BookMapper.getInstance().toDto(book);
 
-        return bookDTO;
+
     }
 
     @Override
@@ -101,7 +93,7 @@ public class BookServiceImpl implements IBookService {
             bookExist.get().setAuthor(bookRequest.getAuthor());
             bookExist.get().setDescription(bookRequest.getDescription());
             bookExist.get().setSlug(bookRequest.getSlug());
-            bookExist.get().setImage(bookRequest.getImage());
+//            bookExist.get().setImage(bookRequest.getImage());
             bookExist.get().setQuantity(bookRequest.getQuantity());
             bookExist.get().setPrice(bookRequest.getPrice());
             Category category = categoryRepository.getById(bookRequest.getCategoryId());
