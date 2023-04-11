@@ -54,22 +54,25 @@ public class SpringSecurityConfig {
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         http
                 .csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers("/api/v1/auth/**","/api/v1/users/**","/api/v1/token/**")
+                .requestMatchers("/api/v1/auth/**", "/api/v1/users/**", "/api/v1/token/**")
                 .permitAll()
-                .requestMatchers(HttpMethod.GET,"/api/v1/books/**","/api/v1/categories/**","/api/v1/roles/**")
+                .requestMatchers("/swagger-ui/**","/v3/api-docs/**")
                 .permitAll()
-                .requestMatchers(HttpMethod.POST,"/api/v1/books/**","/api/v1/categories/**","/api/v1/roles/**")
-                .hasAnyAuthority("admin","librarian")
-                .requestMatchers(HttpMethod.PUT,"/api/v1/books/**","/api/v1/categories/**","/api/v1/roles/**")
-                .hasAnyAuthority("admin","librarian")
-                .requestMatchers(HttpMethod.DELETE,"/api/v1/books/**","/api/v1/categories/**","/api/v1/roles/**")
-                .hasAnyAuthority("admin","librarian")
+                .requestMatchers(HttpMethod.GET, "/api/v1/books/**", "/api/v1/categories/**", "/api/v1/roles/**")
+                .permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/v1/books/**", "/api/v1/categories/**", "/api/v1/roles/**")
+                .hasAnyAuthority("admin", "librarian")
+                .requestMatchers(HttpMethod.PUT, "/api/v1/books/**", "/api/v1/categories/**", "/api/v1/roles/**")
+                .hasAnyAuthority("admin", "librarian")
+                .requestMatchers(HttpMethod.DELETE, "/api/v1/books/**", "/api/v1/categories/**", "/api/v1/roles/**")
+                .hasAnyAuthority("admin", "librarian")
                 .anyRequest()
                 .authenticated()
                 .and()
