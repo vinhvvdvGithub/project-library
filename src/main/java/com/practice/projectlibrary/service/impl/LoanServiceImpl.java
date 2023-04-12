@@ -1,8 +1,8 @@
 package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.LoanMapper;
-import com.practice.projectlibrary.dto.LoanDTO;
 import com.practice.projectlibrary.dto.request.LoanRequest;
+import com.practice.projectlibrary.dto.response.LoanResponse;
 import com.practice.projectlibrary.entity.Loan;
 import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.ILoanRepository;
@@ -34,10 +34,10 @@ public class LoanServiceImpl implements ILoanService {
 
 
     @Override
-    public List<LoanDTO> loans() {
-        List<LoanDTO> loansDTO = new ArrayList<>();
+    public List<LoanResponse> loans() {
+        List<LoanResponse> loansDTO = new ArrayList<>();
         loanRepository.loans().stream().map(
-                loan -> loansDTO.add(LoanMapper.getInstance().toDTO(loan))
+                loan -> loansDTO.add(LoanMapper.getInstance().toResponse(loan))
         ).collect(Collectors.toList());
 
         return loansDTO;
@@ -45,7 +45,7 @@ public class LoanServiceImpl implements ILoanService {
 
 
     @Override
-    public LoanDTO addLoan(@Valid LoanRequest loanRequest) {
+    public LoanResponse addLoan(@Valid LoanRequest loanRequest) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
@@ -64,12 +64,12 @@ public class LoanServiceImpl implements ILoanService {
         loan.setCreatedBy("Librarian");
 
 
-        return LoanMapper.getInstance().toDTO(loan);
+        return LoanMapper.getInstance().toResponse(loan);
     }
 
     @Override
-    public List<LoanDTO> addListLoan(List<@Valid LoanRequest> loanRequests) {
-        List<LoanDTO> loansDTO = new ArrayList<>();
+    public List<LoanResponse> addListLoan(List<@Valid LoanRequest> loanRequests) {
+        List<LoanResponse> loansDTO = new ArrayList<>();
         Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
         for (LoanRequest loanRequest : loanRequests) {
             Loan loan = new Loan();
@@ -85,14 +85,14 @@ public class LoanServiceImpl implements ILoanService {
             loan.setDateOfCheckout(dateCurrent);
             loan.setCreatedBy("Librarian");
             loanRepository.save(loan);
-            loansDTO.add(LoanMapper.getInstance().toDTO(loan));
+            loansDTO.add(LoanMapper.getInstance().toResponse(loan));
         }
 
         return loansDTO;
     }
 
     @Override
-    public LoanDTO updateLoan(Long id, LoanRequest loanRequests) {
+    public LoanResponse updateLoan(Long id, LoanRequest loanRequests) {
 
 
         return null;
@@ -100,13 +100,13 @@ public class LoanServiceImpl implements ILoanService {
 
 
     @Override
-    public LoanDTO deleteLoan(Long id) {
+    public LoanResponse deleteLoan(Long id) {
         Optional<Loan> currentLoan = Optional.of(loanRepository.getReferenceById(id));
 
         if (currentLoan.isPresent()) {
             currentLoan.get().setActive(false);
             currentLoan.get().setStatus("removed");
-            return LoanMapper.getInstance().toDTO(currentLoan.get());
+            return LoanMapper.getInstance().toResponse(currentLoan.get());
 
         } else {
             throw new NotFoundException("Loan not found by id");
@@ -117,14 +117,14 @@ public class LoanServiceImpl implements ILoanService {
 
     //user return book
     @Override
-    public LoanDTO userToReturn(Long id) {
+    public LoanResponse userToReturn(Long id) {
         Optional<Loan> currentLoan = Optional.of(loanRepository.getReferenceById(id));
 
         if (currentLoan.isPresent()) {
             currentLoan.get().setActive(false);
             currentLoan.get().setStatus("returned");
             currentLoan.get().setDateReturned(new Timestamp(System.currentTimeMillis()));
-            return LoanMapper.getInstance().toDTO(currentLoan.get());
+            return LoanMapper.getInstance().toResponse(currentLoan.get());
         } else {
             throw new NotFoundException("Loan not found by id");
         }

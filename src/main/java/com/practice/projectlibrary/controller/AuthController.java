@@ -1,9 +1,9 @@
 package com.practice.projectlibrary.controller;
 
-import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.LoginRequest;
 import com.practice.projectlibrary.dto.request.RegisterRequest;
-import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
+import com.practice.projectlibrary.dto.response.RefreshTokenResponse;
+import com.practice.projectlibrary.dto.response.UserResponse;
 import com.practice.projectlibrary.service.IAuthService;
 import com.practice.projectlibrary.service.impl.RefreshTokenService;
 import jakarta.validation.Valid;
@@ -20,13 +20,13 @@ public class AuthController {
     private final RefreshTokenService refreshTokenService;
 
     @PostMapping("/register")
-    public UserDTO register(@RequestBody @Valid RegisterRequest RegisterRequest) {
+    public UserResponse register(@RequestBody @Valid RegisterRequest RegisterRequest) {
         return authService.regisger(RegisterRequest);
     }
 
 
     @PostMapping("/login")
-    public ResponseEntity<RefreshTokenRespone> loginJWT(@RequestBody @Valid LoginRequest loginRequest) {
+    public ResponseEntity<RefreshTokenResponse> loginJWT(@RequestBody @Valid LoginRequest loginRequest) {
         return authService.login(loginRequest);
     }
 

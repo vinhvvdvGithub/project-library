@@ -1,15 +1,9 @@
 package com.practice.projectlibrary.common.Mapper;
 
-import com.practice.projectlibrary.dto.LoanDTO;
-import com.practice.projectlibrary.dto.RoleDTO;
-import com.practice.projectlibrary.dto.UserDTO;
-import com.practice.projectlibrary.dto.request.LoanRequest;
 import com.practice.projectlibrary.dto.request.UserRequest;
-import com.practice.projectlibrary.entity.Loan;
+import com.practice.projectlibrary.dto.response.UserResponse;
 import com.practice.projectlibrary.entity.User;
 
-import java.util.HashSet;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class UserMapper {
@@ -31,31 +25,17 @@ public class UserMapper {
         return user;
     }
 
-    //to Entity from dto
-//    public Loan toEntity(LoanDTO loanDTO) {
-//        Loan loan = new Loan();
-//        loan.setBookId(loanDTO.getBookId());
-//        loan.setQuantity(loanDTO.getQuantity());
-//        loan.setActive(loanDTO.getActive());
-//        loan.setStatus(loanDTO.getStatus());
-//        loan.setDateOfCheckout(loanDTO.getDateOfCheckout());
-//        loan.setDataDue(loanDTO.getDataDue());
-//        loan.setDateReturned(loanDTO.getDateReturned());
-//        return loan;
-//
-//    }
-
-    //to DTO
-
-    public UserDTO toDTO(User user) {
-        UserDTO userDTO = new UserDTO();
-        userDTO.setEmail(user.getEmail());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setAvatar(user.getAvatar());
-        userDTO.setCreatedAt(user.getCreatedAt());
-        userDTO.setCreatedBy(user.getCreatedBy());
-        userDTO.setRoles(user.getRoles().stream().map(role -> RoleMapper.getInstance().toDTO(role)).collect(Collectors.toSet()));
-        return userDTO;
+    //to response
+    public UserResponse toResponse(User user) {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setEmail(user.getEmail());
+        userResponse.setUsername(user.getUsername());
+        userResponse.setAvatar(user.getAvatar());
+        userResponse.setCreatedAt(user.getCreatedAt());
+        userResponse.setCreatedBy(user.getCreatedBy());
+        userResponse.setRoles(user.getRoles().stream().map(role -> RoleMapper.getInstance().toResponse(role)).collect(Collectors.toSet()));
+        return userResponse;
     }
+
 
 }

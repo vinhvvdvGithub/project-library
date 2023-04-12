@@ -1,8 +1,8 @@
 package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.BookMapper;
-import com.practice.projectlibrary.dto.BookDTO;
 import com.practice.projectlibrary.dto.request.BookRequest;
+import com.practice.projectlibrary.dto.response.BookResponse;
 import com.practice.projectlibrary.entity.Book;
 import com.practice.projectlibrary.entity.Category;
 import com.practice.projectlibrary.exception.BadRequestException;
@@ -13,11 +13,11 @@ import com.practice.projectlibrary.service.IBookService;
 import com.practice.projectlibrary.service.ICloudinaryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -33,60 +33,62 @@ public class BookServiceImpl implements IBookService {
 
     //list book from db return to client DTO format
     @Override
-    public List<BookDTO> books() {
-        List<BookDTO> bookDTOs = new ArrayList<>();
+    public List<BookResponse> books() {
+        List<BookResponse> bookResponses = new ArrayList<>();
 
         bookRepository.books().stream().map(
-                book -> bookDTOs.add(BookMapper.getInstance().toDto(
+                book -> bookResponses.add(BookMapper.getInstance().toResponse(
                         book)
                 )).collect(Collectors.toList());
 
-        return bookDTOs;
+        return bookResponses;
     }
 
 
-    public BookDTO addBook(MultipartFile file, BookRequest bookRequest) {
+    public BookResponse addBook(MultipartFile file, BookRequest bookRequest) {
+        if (file.isEmpty()) {
+            throw new BadRequestException("File image is mandatory");
+        } else {
+            Book book = BookMapper.getInstance().toEntity(bookRequest);
+            String url = cloudinaryService.uploadFile(file);
+            book.setImage(url);
+            book.setActive(true);
+            book.setCategory(categoryRepository.getById(bookRequest.getCategoryId()));
 
-        Book book = new Book();
-        book = BookMapper.getInstance().toEntity(bookRequest);
-        String url = cloudinaryService.uploadFile(file);
-        book.setImage(url);
-        book.setStatus(true);
-        book.setCategory(categoryRepository.getById(bookRequest.getCategoryId()));
+            book.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
 
+            bookRepository.save(book);
 
-        book.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+            return BookMapper.getInstance().toResponse(book);
 
-        bookRepository.save(book);
-
-        return BookMapper.getInstance().toDto(book);
-
+        }
 
     }
 
     @Override
-    public List<BookDTO> addListBook(List<BookRequest> bookRequest) {
-        List<BookDTO> booksDTO = new ArrayList<>();
+    public List<BookResponse> addListBook(List<BookRequest> bookRequest) {
+
+        List<BookResponse> bookResponses = new ArrayList<>();
+
 
         for (BookRequest bookReq : bookRequest) {
-            Book book = new Book();
-            book = BookMapper.getInstance().toEntity(bookReq);
-            book.setStatus(true);
+            Book book = BookMapper.getInstance().toEntity(bookReq);
+            book.setActive(true);
             book.setCategory(categoryRepository.getById(bookReq.getCategoryId()));
 
-            book.setCreatedBy("Librarian");
+            book.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
 
             bookRepository.save(book);
 
-            booksDTO.add(BookMapper.getInstance().toDto(book));
+            bookResponses.add(BookMapper.getInstance().toResponse(book));
         }
-        return booksDTO;
+        return bookResponses;
     }
 
     @Override
     @Modifying
-    public BookDTO updateBook(String slug, Long id, BookRequest bookRequest) {
-        BookDTO bookDTO;
+    public BookResponse updateBook(String slug, Long id, BookRequest bookRequest) {
+
         Optional<Book> bookExist = Optional.ofNullable(bookRepository.getBookBySlugId(slug, id));
         if (bookExist.isPresent()) {
             bookExist.get().setBookTitle(bookRequest.getBookTitle());
@@ -99,27 +101,26 @@ public class BookServiceImpl implements IBookService {
             Category category = categoryRepository.getById(bookRequest.getCategoryId());
             bookExist.get().setCategory(category);
             bookRepository.save(bookExist.get());
-            bookDTO = BookMapper.getInstance().toDto(bookExist.get());
+            return BookMapper.getInstance().toResponse(bookExist.get());
 
         } else {
             throw new BadRequestException("Something went wrong!!!!, check all filed of book request");
         }
-        return bookDTO;
     }
 
     @Override
     @Modifying
-    public BookDTO deleteBook(String slug, Long id) {
-        BookDTO bookDTO;
+    public BookResponse deleteBook(String slug, Long id) {
         Optional<Book> bookExist = Optional.ofNullable(bookRepository.getBookBySlugId(slug, id));
         if (bookExist.isPresent()) {
-            bookExist.get().setStatus(false);
+            bookExist.get().setActive(false);
+            bookExist.get().setUpdatedAt(new Timestamp(System.currentTimeMillis()));
+            bookExist.get().setUpdatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
             bookRepository.save(bookExist.get());
-            bookDTO = BookMapper.getInstance().toDto(bookExist.get());
+            return BookMapper.getInstance().toResponse(bookExist.get());
         } else {
             throw new NotFoundException("Not found book by slug and id, check again");
         }
-        return bookDTO;
     }
 
 }

@@ -1,26 +1,22 @@
-package com.practice.projectlibrary.dto;
+package com.practice.projectlibrary.dto.response;
 
+import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import jakarta.validation.constraints.*;
 import java.sql.Timestamp;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class LoanDTO {
-
-    @NotEmpty(message = "Book id is mandatory")
+@AllArgsConstructor
+public class LoanResponse {
     private Long bookId;
 
-    @NotEmpty(message = "User id is mandatory")
     private Long userId;
 
-    @NotEmpty(message = "Quantity is mandatory")
     private Integer quantity;
 
     private Boolean active;
@@ -32,6 +28,4 @@ public class LoanDTO {
     private Timestamp dataDue;
 
     private Timestamp dateReturned;
-
-
 }

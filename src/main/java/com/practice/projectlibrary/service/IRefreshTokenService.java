@@ -1,7 +1,7 @@
 package com.practice.projectlibrary.service;
 
 import com.practice.projectlibrary.dto.request.RefreshTokenRequest;
-import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
+import com.practice.projectlibrary.dto.response.RefreshTokenResponse;
 import com.practice.projectlibrary.entity.RefreshToken;
 
 import java.util.Optional;
@@ -9,9 +9,9 @@ import java.util.Optional;
 public interface IRefreshTokenService {
   Optional<RefreshToken> findByRefreshToken(String refreshToken);
 
-  RefreshTokenRespone generateAccessToken(RefreshTokenRequest refreshTokenRequest);
+  RefreshTokenResponse generateAccessToken(RefreshTokenRequest refreshTokenRequest);
 
-  RefreshTokenRespone generateRefreshToken(Long userId,String userNameOrEmail);
+  RefreshTokenResponse generateRefreshToken(Long userId, String userNameOrEmail);
 
   RefreshToken verifyExpiration(RefreshToken token);
 

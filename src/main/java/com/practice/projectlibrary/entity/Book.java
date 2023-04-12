@@ -34,7 +34,7 @@ public class Book extends BaseEntity {
     private Long price;
 
 
-    private Boolean status;
+    private Boolean active;
 
 
     @ManyToOne(fetch = FetchType.LAZY)

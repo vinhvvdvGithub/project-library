@@ -2,8 +2,7 @@ package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.RefreshTokenMapper;
 import com.practice.projectlibrary.dto.request.RefreshTokenRequest;
-import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
-import com.practice.projectlibrary.entity.MyUserDetail;
+import com.practice.projectlibrary.dto.response.RefreshTokenResponse;
 import com.practice.projectlibrary.entity.RefreshToken;
 import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.exception.TokenRefreshException;
@@ -15,9 +14,6 @@ import com.practice.projectlibrary.service.IRefreshTokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -52,8 +48,8 @@ public class RefreshTokenService implements IRefreshTokenService {
 
     //generate access token from refresh token
     @Override
-    public RefreshTokenRespone generateAccessToken(RefreshTokenRequest refreshTokenRequest) {
-        RefreshTokenRespone refreshTokenRespone = new RefreshTokenRespone();
+    public RefreshTokenResponse generateAccessToken(RefreshTokenRequest refreshTokenRequest) {
+        RefreshTokenResponse refreshTokenRespone = new RefreshTokenResponse();
 
         Optional<RefreshToken> refreshTokenExist = refreshTokenRepository.findByRefreshToken(refreshTokenRequest.getRefreshToken());
         if (refreshTokenExist.isPresent()) {
@@ -76,7 +72,7 @@ public class RefreshTokenService implements IRefreshTokenService {
 
     //generate refresh token for user
     @Override
-    public RefreshTokenRespone generateRefreshToken(Long userId,String userNameOrEmail ) {
+    public RefreshTokenResponse generateRefreshToken(Long userId, String userNameOrEmail ) {
         RefreshToken token = new RefreshToken();
         token.setUser(userRepository.getUserByUsernameAndEmail(userNameOrEmail).get());
         token.setRefreshToken(UUID.randomUUID().toString());

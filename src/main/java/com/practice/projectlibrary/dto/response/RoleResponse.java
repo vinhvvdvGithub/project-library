@@ -1,21 +1,17 @@
-package com.practice.projectlibrary.dto;
+package com.practice.projectlibrary.dto.response;
 
-import com.practice.projectlibrary.entity.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.sql.Timestamp;
-import java.util.List;
-import java.util.Set;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class RoleDTO {
-
+public class RoleResponse {
     private String roleName;
     private Timestamp createdAt;
     private String createdBy;

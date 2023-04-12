@@ -12,7 +12,7 @@ import java.util.List;
 public interface IBookRepository extends JpaRepository<Book,Long> {
 
     //list book
-    @Query(value = "SELECT * FROM books WHERE status = true",nativeQuery = true)
+    @Query(value = "SELECT * FROM books WHERE active = true",nativeQuery = true)
     List<Book> books();
 
     //insert book
@@ -22,7 +22,7 @@ public interface IBookRepository extends JpaRepository<Book,Long> {
     //delete book by slug && id
 
     //select book by slug && id
-    @Query(value = "SELECT * FROM books WHERE (status = true AND slug=:slug AND id=:id)",nativeQuery = true)
+    @Query(value = "SELECT * FROM books WHERE (active = true AND slug=:slug AND id=:id)",nativeQuery = true)
     Book getBookBySlugId(@Param("slug")String slug,@Param("id")Long id);
 
 

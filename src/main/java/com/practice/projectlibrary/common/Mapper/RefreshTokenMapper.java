@@ -1,6 +1,6 @@
 package com.practice.projectlibrary.common.Mapper;
 
-import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
+import com.practice.projectlibrary.dto.response.RefreshTokenResponse;
 import com.practice.projectlibrary.entity.RefreshToken;
 
 public class RefreshTokenMapper {
@@ -13,9 +13,9 @@ public class RefreshTokenMapper {
         return INSTANCE;
     }
 
-    //to dto(respone)
-    public RefreshTokenRespone toRefreshTokenRespone(RefreshToken refreshToken){
-        RefreshTokenRespone refreshTokenRespone = new RefreshTokenRespone();
+    //to refresh token response
+    public RefreshTokenResponse toRefreshTokenRespone(RefreshToken refreshToken){
+        RefreshTokenResponse refreshTokenRespone = new RefreshTokenResponse();
         refreshTokenRespone.setRefreshToken(refreshToken.getRefreshToken());
         refreshTokenRespone.setAccessToken(refreshTokenRespone.getAccessToken());
         refreshTokenRespone.setType(refreshTokenRespone.getType());

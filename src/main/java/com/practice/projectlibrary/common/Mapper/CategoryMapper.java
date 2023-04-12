@@ -1,8 +1,8 @@
 package com.practice.projectlibrary.common.Mapper;
 
-import com.practice.projectlibrary.dto.BookDTO;
-import com.practice.projectlibrary.dto.CategoryDTO;
 import com.practice.projectlibrary.dto.request.CategoryRequest;
+import com.practice.projectlibrary.dto.response.BookResponse;
+import com.practice.projectlibrary.dto.response.CategoryResponse;
 import com.practice.projectlibrary.entity.Category;
 
 
@@ -21,16 +21,8 @@ public class CategoryMapper {
         return INSTANCE;
     }
 
-    //to Entity from dto
 
-    public Category toEntity(CategoryDTO categoryDTO) {
-        Category category = new Category();
-        category.setCategoryName(categoryDTO.getCategoryName());
-        category.setSlug(categoryDTO.getSlug());
-        return category;
-    }
-
-    //to Entity from request
+    //to category Entity from request
 
     public Category toEntity(CategoryRequest categoryRequest) {
         Category category = new Category();
@@ -40,16 +32,16 @@ public class CategoryMapper {
     }
 
 
-    //to DTO
-    public CategoryDTO toDTO(Category category) {
-        CategoryDTO categoryDTO = new CategoryDTO();
-        categoryDTO.setCategoryName(category.getCategoryName());
-        categoryDTO.setSlug(category.getSlug());
+    //to category response
+    public CategoryResponse toResponse(Category category) {
+        CategoryResponse categoryResponse = new CategoryResponse();
+        categoryResponse.setCategoryName(category.getCategoryName());
+        categoryResponse.setSlug(category.getSlug());
 
 
-        List<BookDTO> booksDtoByCategory = category.getBookByCategory().stream().map(
+        List<BookResponse> bookResponsesByCategory = category.getBookByCategory().stream().map(
                 bookCategory ->
-                        new BookDTO(
+                        new BookResponse(
                                 bookCategory.getBookTitle(),
                                 bookCategory.getAuthor(),
                                 bookCategory.getDescription(),
@@ -61,8 +53,8 @@ public class CategoryMapper {
                         )
         ).collect(Collectors.toList());
 
-        categoryDTO.setBooksByCategory(booksDtoByCategory);
+        categoryResponse.setBooksByCategory(bookResponsesByCategory);
 
-        return categoryDTO;
+        return categoryResponse;
     }
 }

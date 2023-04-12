@@ -1,7 +1,7 @@
 package com.practice.projectlibrary.controller;
 
 import com.practice.projectlibrary.dto.request.RefreshTokenRequest;
-import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
+import com.practice.projectlibrary.dto.response.RefreshTokenResponse;
 import com.practice.projectlibrary.service.IRefreshTokenService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +18,7 @@ public class RefreshTokenController {
 
   @PostMapping("/new-accesstoken")
   @ResponseStatus(HttpStatus.OK)
-  public RefreshTokenRespone newAccessToken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest) {
+  public RefreshTokenResponse newAccessToken(@RequestBody @Valid RefreshTokenRequest refreshTokenRequest) {
     return refreshTokenService.generateAccessToken(refreshTokenRequest);
   }
 

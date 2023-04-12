@@ -1,7 +1,7 @@
 package com.practice.projectlibrary.service;
 
-import com.practice.projectlibrary.dto.BookDTO;
 import com.practice.projectlibrary.dto.request.BookRequest;
+import com.practice.projectlibrary.dto.response.BookResponse;
 import org.springframework.web.multipart.MultipartFile;
 
 
@@ -10,17 +10,17 @@ import java.util.List;
 public interface IBookService {
 
     //list book
-    List<BookDTO> books();
+    List<BookResponse> books();
 
     //add new book
-    BookDTO addBook(MultipartFile file, BookRequest bookRequest);
+    BookResponse addBook(MultipartFile file, BookRequest bookRequest);
 
-    List<BookDTO> addListBook(List<BookRequest> bookRequest);
+    List<BookResponse> addListBook(List<BookRequest> bookRequest);
     //update book by slug && id
-    BookDTO updateBook(String slug, Long id, BookRequest bookRequest);
+    BookResponse updateBook(String slug, Long id, BookRequest bookRequest);
 
     //delete book by slug && id
-    BookDTO deleteBook(String slug, Long id);
+    BookResponse deleteBook(String slug, Long id);
 
 
 }

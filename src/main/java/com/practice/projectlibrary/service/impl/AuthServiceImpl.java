@@ -1,10 +1,10 @@
 package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.UserMapper;
-import com.practice.projectlibrary.dto.UserDTO;
 import com.practice.projectlibrary.dto.request.LoginRequest;
 import com.practice.projectlibrary.dto.request.RegisterRequest;
-import com.practice.projectlibrary.dto.respone.RefreshTokenRespone;
+import com.practice.projectlibrary.dto.response.RefreshTokenResponse;
+import com.practice.projectlibrary.dto.response.UserResponse;
 import com.practice.projectlibrary.entity.Role;
 import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.exception.UserExistException;
@@ -39,7 +39,7 @@ public class AuthServiceImpl implements IAuthService {
 
 
     @Override
-    public UserDTO regisger(@Valid @RequestBody RegisterRequest registerRequest) {
+    public UserResponse regisger(@Valid @RequestBody RegisterRequest registerRequest) {
         if (userRepository.existsUserByEmail(registerRequest.getEmail()) || userRepository.existsUserByUsername(registerRequest.getUsername())) {
             throw new UserExistException("User exist");
         } else {
@@ -53,16 +53,16 @@ public class AuthServiceImpl implements IAuthService {
             user.setRoles(role);
             user.setAvatar("");
             user.setActive(true);
-            user.setUpdatedBy("Librarian");
+            user.setUpdatedBy("");
             userRepository.save(user);
 
-            return UserMapper.getInstance().toDTO(user);
+            return UserMapper.getInstance().toResponse(user);
         }
 
     }
 
     @Override
-    public ResponseEntity<RefreshTokenRespone> login(LoginRequest loginRequest) {
+    public ResponseEntity<RefreshTokenResponse> login(LoginRequest loginRequest) {
         Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(
                 loginRequest.getEmailOrUsername(), loginRequest.getPassword()
         ));
@@ -75,7 +75,7 @@ public class AuthServiceImpl implements IAuthService {
 
         String jwt = jwtService.generateToken(userLogged);
         String refreshToken = refreshTokenService.generateRefreshToken(userExist.get().getId(), userLogged.getUsername()).getRefreshToken();
-        return ResponseEntity.ok().body(new RefreshTokenRespone(jwt, refreshToken, "Bearer"));
+        return ResponseEntity.ok().body(new RefreshTokenResponse(jwt, refreshToken, "Bearer"));
 
     }
 

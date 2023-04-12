@@ -1,22 +1,21 @@
 package com.practice.projectlibrary.service;
 
-import com.practice.projectlibrary.dto.RoleDTO;
 import com.practice.projectlibrary.dto.request.RoleRequest;
-import org.springframework.web.bind.annotation.PathVariable;
+import com.practice.projectlibrary.dto.response.RoleResponse;
 
 import java.util.List;
 
 public interface IRoleService {
 
-    List<RoleDTO> roles();
+    List<RoleResponse> roles();
 
-    List<RoleDTO> roleDetail(String slug);
+    List<RoleResponse> roleDetail(String slug);
 
-    RoleDTO addRole(RoleRequest roleRequest);
+    RoleResponse addRole(RoleRequest roleRequest);
 
-    RoleDTO updateRole(Long id,RoleRequest roleRequest);
+    RoleResponse updateRole(Long id,RoleRequest roleRequest);
 
-    RoleDTO deleteRole(Long id);
+    RoleResponse deleteRole(Long id);
 
 
 

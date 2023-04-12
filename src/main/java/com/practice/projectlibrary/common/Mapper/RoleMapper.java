@@ -1,8 +1,7 @@
 package com.practice.projectlibrary.common.Mapper;
 
-import com.practice.projectlibrary.common.stringUltils.StringConvertToSlug;
-import com.practice.projectlibrary.dto.RoleDTO;
 import com.practice.projectlibrary.dto.request.RoleRequest;
+import com.practice.projectlibrary.dto.response.RoleResponse;
 import com.practice.projectlibrary.entity.Role;
 
 public class RoleMapper {
@@ -22,19 +21,12 @@ public class RoleMapper {
         return role;
     }
 
-    //to entity from dto
-    public Role toEntity(RoleDTO roleDTO){
-        Role role = new Role();
-        role.setRoleName(roleDTO.getRoleName());
-        return role;
-    }
-
-    //to dto from entity
-    public RoleDTO toDTO(Role role){
-        RoleDTO roleDTO = new RoleDTO();
-        roleDTO.setRoleName(role.getRoleName());
-        roleDTO.setCreatedAt(role.getCreatedAt());
-        roleDTO.setCreatedBy(role.getCreatedBy());
-        return roleDTO;
+    //to response from entity
+    public RoleResponse toResponse(Role role){
+        RoleResponse roleResponse = new RoleResponse();
+        roleResponse.setRoleName(role.getRoleName());
+        roleResponse.setCreatedAt(role.getCreatedAt());
+        roleResponse.setCreatedBy(role.getCreatedBy());
+        return roleResponse;
     }
 }

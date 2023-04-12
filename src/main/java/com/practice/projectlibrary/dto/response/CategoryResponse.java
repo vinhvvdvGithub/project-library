@@ -1,21 +1,19 @@
-package com.practice.projectlibrary.dto;
+package com.practice.projectlibrary.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CategoryDTO {
+public class CategoryResponse {
 
     private String categoryName;
-
     private String slug;
-
-    private List<BookDTO> booksByCategory;
-
+    private List<BookResponse> booksByCategory;
 }

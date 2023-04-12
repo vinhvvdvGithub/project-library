@@ -12,15 +12,15 @@ import java.util.Set;
 @Repository
 public interface IRoleRepository extends JpaRepository<Role,Long> {
 
-    @Query(value = "SELECT * FROM roles WHERE status=true",nativeQuery = true)
+    @Query(value = "SELECT * FROM roles WHERE active=true",nativeQuery = true)
     List<Role> roles();
 
     @Query(value = "select * from roles where slug = :slug",nativeQuery = true)
     List<Role> roleDetail(@Param("slug") String slug);
-    @Query(value = "select * from roles where slug = :slug and status=true",nativeQuery = true)
+    @Query(value = "select * from roles where active=true  and slug = :slug",nativeQuery = true)
     Set<Role> getRoleBySlug(@Param("slug")String slug);
 
-    @Query(value = "select * from roles where id = :id",nativeQuery = true)
+    @Query(value = "select * from roles where active=true and id = :id",nativeQuery = true)
     Set<Role> getRoleByRoleId(@Param("id")Integer id);
 
 

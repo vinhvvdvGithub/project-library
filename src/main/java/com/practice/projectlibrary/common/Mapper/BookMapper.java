@@ -1,13 +1,14 @@
 package com.practice.projectlibrary.common.Mapper;
 
 
-import com.practice.projectlibrary.dto.BookDTO;
 import com.practice.projectlibrary.dto.request.BookRequest;
+import com.practice.projectlibrary.dto.response.BookResponse;
 import com.practice.projectlibrary.entity.Book;
 
 public class BookMapper {
 
     private static BookMapper INSTANCE;
+
     public static BookMapper getInstance() {
         if (INSTANCE == null) {
             INSTANCE = new BookMapper();
@@ -16,7 +17,7 @@ public class BookMapper {
     }
 
     //to book entity from request
-    public Book toEntity(BookRequest  bookRequest) {
+    public Book toEntity(BookRequest bookRequest) {
         Book book = new Book();
         book.setBookTitle(bookRequest.getBookTitle());
         book.setAuthor(bookRequest.getAuthor());
@@ -29,32 +30,19 @@ public class BookMapper {
     }
 
 
-    //to book entity from dto
-    public Book toEntity(BookDTO bookDTO) {
-        Book book = new Book();
-        book.setBookTitle(bookDTO.getBookTitle());
-        book.setAuthor(bookDTO.getAuthor());
-        book.setDescription(bookDTO.getDescription());
-        book.setSlug(bookDTO.getSlug());
-        book.setImage(bookDTO.getImage());
-        book.setQuantity(bookDTO.getQuantity());
-        book.setPrice(bookDTO.getPrice());
-        return book;
 
-    }
+    //to book response
+    public BookResponse toResponse(Book book) {
+        BookResponse bookResponse = new BookResponse();
+        bookResponse.setBookTitle(book.getBookTitle());
+        bookResponse.setAuthor(book.getAuthor());
+        bookResponse.setDescription(book.getDescription());
+        bookResponse.setSlug(book.getSlug());
+        bookResponse.setImage(book.getImage());
+        bookResponse.setQuantity(book.getQuantity());
+        bookResponse.setPrice(book.getPrice());
+        bookResponse.setCategoryName(book.getCategory().getCategoryName());
 
-    //to book dto
-    public BookDTO toDto(Book book){
-        BookDTO bookDTO = new BookDTO();
-        bookDTO.setBookTitle(book.getBookTitle());
-        bookDTO.setAuthor(book.getAuthor());
-        bookDTO.setDescription(book.getDescription());
-        bookDTO.setSlug(book.getSlug());
-        bookDTO.setImage(book.getImage());
-        bookDTO.setQuantity(book.getQuantity());
-        bookDTO.setPrice(book.getPrice());
-        bookDTO.setCategoryName(book.getCategory().getCategoryName());
-
-        return bookDTO;
+        return bookResponse;
     }
 }

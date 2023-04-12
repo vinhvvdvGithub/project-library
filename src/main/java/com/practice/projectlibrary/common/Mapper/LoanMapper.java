@@ -1,7 +1,7 @@
 package com.practice.projectlibrary.common.Mapper;
 
-import com.practice.projectlibrary.dto.LoanDTO;
 import com.practice.projectlibrary.dto.request.LoanRequest;
+import com.practice.projectlibrary.dto.response.LoanResponse;
 import com.practice.projectlibrary.entity.Loan;
 
 public class LoanMapper {
@@ -24,34 +24,19 @@ public class LoanMapper {
 
     }
 
-    //to Entity from dto
-    public Loan toEntity(LoanDTO loanDTO){
-        Loan loan = new Loan();
-        loan.setBookId(loanDTO.getBookId());
-        loan.setQuantity(loanDTO.getQuantity());
-        loan.setActive(loanDTO.getActive());
-        loan.setStatus(loanDTO.getStatus());
-        loan.setDateOfCheckout(loanDTO.getDateOfCheckout());
-        loan.setDataDue(loanDTO.getDataDue());
-        loan.setDateReturned(loanDTO.getDateReturned());
-        return loan;
+    //to loan response
+    public LoanResponse toResponse(Loan loan){
+        LoanResponse loanResponse = new LoanResponse();
+        loanResponse.setBookId(loan.getBookId());
+        loanResponse.setUserId(loan.getUser().getId());
+        loanResponse.setQuantity(loan.getQuantity());
+        loanResponse.setActive(loan.getActive());
+        loanResponse.setStatus(loan.getStatus());
+        loanResponse.setDateOfCheckout(loan.getDateOfCheckout());
+        loanResponse.setDataDue(loan.getDataDue());
+        loanResponse.setDateReturned(loan.getDateReturned());
 
-    }
-
-    //to DTO
-
-    public LoanDTO toDTO(Loan loan){
-        LoanDTO loanDTO = new LoanDTO();
-        loanDTO.setBookId(loan.getBookId());
-        loanDTO.setUserId(loan.getUser().getId());
-        loanDTO.setQuantity(loan.getQuantity());
-        loanDTO.setActive(loan.getActive());
-        loanDTO.setStatus(loan.getStatus());
-        loanDTO.setDateOfCheckout(loan.getDateOfCheckout());
-        loanDTO.setDataDue(loan.getDataDue());
-        loanDTO.setDateReturned(loan.getDateReturned());
-
-        return loanDTO;
+        return loanResponse;
 
     }
 

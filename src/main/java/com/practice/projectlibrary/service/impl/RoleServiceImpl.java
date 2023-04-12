@@ -2,13 +2,14 @@ package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.RoleMapper;
 import com.practice.projectlibrary.common.stringUltils.StringConvertToSlug;
-import com.practice.projectlibrary.dto.RoleDTO;
 import com.practice.projectlibrary.dto.request.RoleRequest;
+import com.practice.projectlibrary.dto.response.RoleResponse;
 import com.practice.projectlibrary.entity.Role;
 import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.IRoleRepository;
 import com.practice.projectlibrary.service.IRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -23,46 +24,45 @@ public class RoleServiceImpl implements IRoleService {
     private IRoleRepository roleRepository;
 
     @Override
-    public List<RoleDTO> roles() {
-        List<RoleDTO> roleDTOS = new ArrayList<>();
+    public List<RoleResponse> roles() {
+        List<RoleResponse> roleResponses = new ArrayList<>();
         roleRepository.roles().stream().map(
-                role -> roleDTOS.add(RoleMapper.getInstance().toDTO(role))
+                role -> roleResponses.add(RoleMapper.getInstance().toResponse(role))
         ).collect(Collectors.toList());
 
-        return roleDTOS;
+        return roleResponses;
     }
 
     @Override
-    public List<RoleDTO> roleDetail(String slug) {
-        List<RoleDTO> roleDTOS = new ArrayList<>();
+    public List<RoleResponse> roleDetail(String slug) {
+        List<RoleResponse> roleResponses = new ArrayList<>();
         roleRepository.roleDetail(slug).stream().map(
-                role -> roleDTOS.add(RoleMapper.getInstance().toDTO(role))
+                role -> roleResponses.add(RoleMapper.getInstance().toResponse(role))
         ).collect(Collectors.toList());
-        return roleDTOS;
+        return roleResponses;
     }
 
     @Override
-    public RoleDTO addRole(RoleRequest roleRequest) {
-        Role role = new Role();
-        role = RoleMapper.getInstance().toEntity(roleRequest);
+    public RoleResponse addRole(RoleRequest roleRequest) {
+        Role role = RoleMapper.getInstance().toEntity(roleRequest);
         role.setActive(true);
         role.setSlug(StringConvertToSlug.covertStringToSlug(roleRequest.getRoleName()));
-        role.setCreatedBy("Librian");
+        role.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
         roleRepository.save(role);
-        return RoleMapper.getInstance().toDTO(role);
+        return RoleMapper.getInstance().toResponse(role);
     }
 
     @Override
-    public RoleDTO updateRole(Long id, RoleRequest roleRequest) {
+    public RoleResponse updateRole(Long id, RoleRequest roleRequest) {
 
         Optional<Role> role = roleRepository.findById(id);
         if (role.isPresent()) {
             role.get().setRoleName(roleRequest.getRoleName());
             role.get().setActive(true);
             role.get().setSlug(StringConvertToSlug.covertStringToSlug(roleRequest.getRoleName()));
-            role.get().setCreatedBy("Librian");
+            role.get().setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
             roleRepository.save(role.get());
-            return RoleMapper.getInstance().toDTO(role.get());
+            return RoleMapper.getInstance().toResponse(role.get());
 
         } else {
             throw new NotFoundException("Role id not found");
@@ -70,14 +70,14 @@ public class RoleServiceImpl implements IRoleService {
     }
 
     @Override
-    public RoleDTO deleteRole(Long id) {
+    public RoleResponse deleteRole(Long id) {
 //        Optional<Role> role = roleRepository.getReferenceById(id);
         Role role = roleRepository.getReferenceById(id);
 
         if (role != null) {
             role.setActive(false);
             roleRepository.save(role);
-            return RoleMapper.getInstance().toDTO(role);
+            return RoleMapper.getInstance().toResponse(role);
 
         } else {
             throw new NotFoundException("Role id not found");

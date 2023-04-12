@@ -1,7 +1,7 @@
 package com.practice.projectlibrary.controller;
 
-import com.practice.projectlibrary.dto.RoleDTO;
 import com.practice.projectlibrary.dto.request.RoleRequest;
+import com.practice.projectlibrary.dto.response.RoleResponse;
 import com.practice.projectlibrary.service.IRoleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,28 +18,28 @@ public class RoleController {
     private IRoleService roleService;
 
     @GetMapping("/")
-    public List<RoleDTO> dtos(){
+    public List<RoleResponse> dtos(){
         return roleService.roles();
     }
 
     @GetMapping("/search")
-    public List<RoleDTO> dtos(@RequestParam("slug") String slug){
+    public List<RoleResponse> dtos(@RequestParam("slug") String slug){
         return roleService.roleDetail(slug);
     }
 
     @PostMapping("/")
-    public RoleDTO addRole(@Valid @RequestBody RoleRequest roleRequest){
+    public RoleResponse addRole(@Valid @RequestBody RoleRequest roleRequest){
         return roleService.addRole(roleRequest);
     }
 
 
     @PutMapping("/{id}")
-    public RoleDTO updateRole(@Valid @RequestBody RoleRequest roleRequest, @PathVariable("id") Long id){
+    public RoleResponse updateRole(@Valid @RequestBody RoleRequest roleRequest, @PathVariable("id") Long id){
         return roleService.updateRole(id,roleRequest);
     }
 
     @DeleteMapping("/{id}")
-    public RoleDTO deleteRole(@PathVariable("id") Long id){
+    public RoleResponse deleteRole(@PathVariable("id") Long id){
         return roleService.deleteRole(id);
     }
 

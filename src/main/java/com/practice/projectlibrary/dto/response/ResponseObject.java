@@ -1,4 +1,4 @@
-package com.practice.projectlibrary.dto.respone;
+package com.practice.projectlibrary.dto.response;
 
 import lombok.*;
 import org.springframework.http.HttpStatus;
@@ -10,7 +10,7 @@ import org.springframework.http.HttpStatus;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ResponeObject {
+public class ResponseObject {
     private HttpStatus statusCode;
     private String message;
     private Object data;
