@@ -16,27 +16,27 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class CloudinaryServiceImpl implements ICloudinaryService {
 
-    private final Cloudinary cloudinary;
+  private final Cloudinary cloudinary;
 
-    @Override
-    public String uploadFile(MultipartFile multipartFile) {
-        try {
-            File uploadedFile = convertMultiPartToFile(multipartFile);
-            Map uploadResult = cloudinary.uploader().upload(uploadedFile, ObjectUtils.emptyMap());
-            return uploadResult.get("url").toString();
-        } catch (Exception e) {
-            throw new RuntimeException(e.getMessage());
-        }
-
+  @Override
+  public String uploadFile(MultipartFile multipartFile) {
+    try {
+      File uploadedFile = convertMultiPartToFile(multipartFile);
+      Map uploadResult = cloudinary.uploader().upload(uploadedFile, ObjectUtils.asMap("folder", "library_image"));
+      return uploadResult.get("url").toString();
+    } catch (Exception e) {
+      throw new RuntimeException(e.getMessage());
     }
 
-    @Override
-    public File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
-        File convFile = new File(multipartFile.getOriginalFilename());
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(multipartFile.getBytes());
-        fos.close();
+  }
 
-        return convFile;
-    }
+  @Override
+  public File convertMultiPartToFile(MultipartFile multipartFile) throws IOException {
+    File convFile = new File(multipartFile.getOriginalFilename());
+    FileOutputStream fos = new FileOutputStream(convFile);
+    fos.write(multipartFile.getBytes());
+    fos.close();
+
+    return convFile;
+  }
 }

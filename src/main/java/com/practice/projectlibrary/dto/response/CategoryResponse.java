@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryResponse {
 
-    private String categoryName;
-    private String slug;
-    private List<BookResponse> booksByCategory;
+  private String categoryName;
+  private String slug;
+  private List<BookResponse> booksByCategory;
 }

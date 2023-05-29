@@ -25,76 +25,76 @@ import java.util.UUID;
 public class RefreshTokenService implements IRefreshTokenService {
 
 
-    @Value("${app.jwtRefreshExpirationMs}")
-    private Long jwtRefreshExpirationMs;
+  @Value("${app.jwtRefreshExpirationMs}")
+  private Long jwtRefreshExpirationMs;
 
-    private final JwtProvider jwtProvider;
+  private final JwtProvider jwtProvider;
 
-    private final IRefreshTokenRepository refreshTokenRepository;
+  private final IRefreshTokenRepository refreshTokenRepository;
 
-    private final IUserRepository userRepository;
-
-
-    private final JwtService jwtService;
-
-    private final AuthenticationManager authenticationManager;
+  private final IUserRepository userRepository;
 
 
-    @Override
-    public Optional<RefreshToken> findByRefreshToken(String refreshToken) {
-        return refreshTokenRepository.findByRefreshToken(refreshToken);
-    }
+  private final JwtService jwtService;
+
+  private final AuthenticationManager authenticationManager;
 
 
-    //generate access token from refresh token
-    @Override
-    public RefreshTokenResponse generateAccessToken(RefreshTokenRequest refreshTokenRequest) {
-        RefreshTokenResponse refreshTokenRespone = new RefreshTokenResponse();
+  @Override
+  public Optional<RefreshToken> findByRefreshToken(String refreshToken) {
+    return refreshTokenRepository.findByRefreshToken(refreshToken);
+  }
 
-        Optional<RefreshToken> refreshTokenExist = refreshTokenRepository.findByRefreshToken(refreshTokenRequest.getRefreshToken());
-        if (refreshTokenExist.isPresent()) {
-            RefreshToken oldRefreshToken = this.verifyExpiration(refreshTokenExist.get());
-            User oldRefreshTokenUser = oldRefreshToken.getUser();
 
-            String accessToken = jwtService.generateToken(oldRefreshTokenUser.getEmail());
+  //generate access token from refresh token
+  @Override
+  public RefreshTokenResponse generateAccessToken(RefreshTokenRequest refreshTokenRequest) {
+    RefreshTokenResponse refreshTokenRespone = new RefreshTokenResponse();
 
-            refreshTokenRespone.setRefreshToken(refreshTokenRequest.getRefreshToken());
-            refreshTokenRespone.setAccessToken(accessToken);
-            refreshTokenRespone.setType("Bearer");
+    Optional<RefreshToken> refreshTokenExist = refreshTokenRepository.findByRefreshToken(refreshTokenRequest.getRefreshToken());
+    if (refreshTokenExist.isPresent()) {
+      RefreshToken oldRefreshToken = this.verifyExpiration(refreshTokenExist.get());
+      User oldRefreshTokenUser = oldRefreshToken.getUser();
 
-            return refreshTokenRespone;
-        } else {
-            throw new TokenRefreshException(refreshTokenRequest.getRefreshToken(), "Refresh token not found");
+      String accessToken = jwtService.generateToken(oldRefreshTokenUser.getEmail());
 
-        }
+      refreshTokenRespone.setRefreshToken(refreshTokenRequest.getRefreshToken());
+      refreshTokenRespone.setAccessToken(accessToken);
+      refreshTokenRespone.setType("Bearer");
+
+      return refreshTokenRespone;
+    } else {
+      throw new TokenRefreshException(refreshTokenRequest.getRefreshToken(), "Refresh token not found");
 
     }
 
-    //generate refresh token for user
-    @Override
-    public RefreshTokenResponse generateRefreshToken(Long userId, String userNameOrEmail ) {
-        RefreshToken token = new RefreshToken();
-        token.setUser(userRepository.getUserByUsernameAndEmail(userNameOrEmail).get());
-        token.setRefreshToken(UUID.randomUUID().toString());
-        token.setExpiryDate(Instant.now().plusMillis(jwtRefreshExpirationMs));
-        refreshTokenRepository.save(token);
-        return RefreshTokenMapper.getInstance().toRefreshTokenRespone(token);
+  }
+
+  //generate refresh token for user
+  @Override
+  public RefreshTokenResponse generateRefreshToken(Long userId, String userNameOrEmail) {
+    RefreshToken token = new RefreshToken();
+    token.setUser(userRepository.getUserByUsernameAndEmail(userNameOrEmail).get());
+    token.setRefreshToken(UUID.randomUUID().toString());
+    token.setExpiryDate(Instant.now().plusMillis(jwtRefreshExpirationMs));
+    refreshTokenRepository.save(token);
+    return RefreshTokenMapper.getInstance().toRefreshTokenRespone(token);
+  }
+
+
+  //check time expiry refresh token
+  @Override
+  public RefreshToken verifyExpiration(RefreshToken token) {
+    if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
+      refreshTokenRepository.delete(token);
+      throw new TokenRefreshException(token.getRefreshToken(), "Refresh token was expired. Please make a new signin request");
     }
+    return token;
+  }
 
+  @Override
+  public int deteleByUserId(Long userId) {
 
-    //check time expiry refresh token
-    @Override
-    public RefreshToken verifyExpiration(RefreshToken token) {
-        if (token.getExpiryDate().compareTo(Instant.now()) < 0) {
-            refreshTokenRepository.delete(token);
-            throw new TokenRefreshException(token.getRefreshToken(), "Refresh token was expired. Please make a new signin request");
-        }
-        return token;
-    }
-
-    @Override
-    public int deteleByUserId(Long userId) {
-
-        return refreshTokenRepository.deleteByUser(userRepository.findUserById(userId).get());
-    }
+    return refreshTokenRepository.deleteByUser(userRepository.findUserById(userId).get());
+  }
 }

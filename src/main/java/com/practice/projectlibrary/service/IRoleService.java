@@ -7,16 +7,15 @@ import java.util.List;
 
 public interface IRoleService {
 
-    List<RoleResponse> roles();
+  List<RoleResponse> roles();
 
-    List<RoleResponse> roleDetail(String slug);
+  List<RoleResponse> roleDetail(String slug);
 
-    RoleResponse addRole(RoleRequest roleRequest);
+  RoleResponse addRole(RoleRequest roleRequest);
 
-    RoleResponse updateRole(Long id,RoleRequest roleRequest);
+  RoleResponse updateRole(Long id, RoleRequest roleRequest);
 
-    RoleResponse deleteRole(Long id);
-
+  RoleResponse deleteRole(Long id);
 
 
 }

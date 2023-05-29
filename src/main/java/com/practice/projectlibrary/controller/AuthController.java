@@ -16,27 +16,23 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/v1/auth")
 @RequiredArgsConstructor
 public class AuthController {
-    private final IAuthService authService;
-    private final RefreshTokenService refreshTokenService;
+  private final IAuthService authService;
+  private final RefreshTokenService refreshTokenService;
 
-    @PostMapping("/register")
-    public UserResponse register(@RequestBody @Valid RegisterRequest RegisterRequest) {
-        return authService.regisger(RegisterRequest);
-    }
+  @PostMapping("/register")
+  public UserResponse register(@RequestBody @Valid RegisterRequest RegisterRequest) {
+    return authService.regisger(RegisterRequest);
+  }
 
+  @PostMapping("/login")
+  public ResponseEntity<RefreshTokenResponse> loginJWT(@RequestBody @Valid LoginRequest loginRequest) {
+    return authService.login(loginRequest);
+  }
 
-    @PostMapping("/login")
-    public ResponseEntity<RefreshTokenResponse> loginJWT(@RequestBody @Valid LoginRequest loginRequest) {
-        return authService.login(loginRequest);
-    }
-
-
-
-
-    @DeleteMapping("/{userId}")
-    @ResponseStatus(HttpStatus.OK)
-    public int deleteRefreshToken(@Valid @PathVariable(value = "userId") Long userId) {
-        return refreshTokenService.deteleByUserId(userId);
-    }
+  @DeleteMapping("/{userId}")
+  @ResponseStatus(HttpStatus.OK)
+  public int deleteRefreshToken(@Valid @PathVariable(value = "userId") Long userId) {
+    return refreshTokenService.deteleByUserId(userId);
+  }
 
 }

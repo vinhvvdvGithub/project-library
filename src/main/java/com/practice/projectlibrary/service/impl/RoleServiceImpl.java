@@ -20,68 +20,69 @@ import java.util.stream.Collectors;
 @Service
 public class RoleServiceImpl implements IRoleService {
 
-    @Autowired
-    private IRoleRepository roleRepository;
+  @Autowired
+  private IRoleRepository roleRepository;
 
-    @Override
-    public List<RoleResponse> roles() {
-        List<RoleResponse> roleResponses = new ArrayList<>();
-        roleRepository.roles().stream().map(
-                role -> roleResponses.add(RoleMapper.getInstance().toResponse(role))
-        ).collect(Collectors.toList());
+  @Override
+  public List<RoleResponse> roles() {
+    List<RoleResponse> roleResponses = new ArrayList<>();
+    roleRepository.roles().stream().map(
+        role -> roleResponses.add(RoleMapper.getInstance().toResponse(role))
+    ).collect(Collectors.toList());
 
-        return roleResponses;
+    return roleResponses;
+  }
+
+  @Override
+  public List<RoleResponse> roleDetail(String slug) {
+    List<RoleResponse> roleResponses = new ArrayList<>();
+    roleRepository.roleDetail(slug).stream().map(
+        role -> roleResponses.add(RoleMapper.getInstance().toResponse(role))
+    ).collect(Collectors.toList());
+    return roleResponses;
+  }
+
+  @Override
+  public RoleResponse addRole(RoleRequest roleRequest) {
+    Role role = RoleMapper.getInstance().toEntity(roleRequest);
+    role.setActive(true);
+    role.setSlug(StringConvertToSlug.covertStringToSlug(roleRequest.getRoleName()));
+    role.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+    roleRepository.save(role);
+    return RoleMapper.getInstance().toResponse(role);
+  }
+
+  @Override
+  public RoleResponse updateRole(Long id, RoleRequest roleRequest) {
+
+    Optional<Role> role = roleRepository.findById(id);
+    if (role.isPresent()) {
+      role.get().setRoleName(roleRequest.getRoleName());
+      role.get().setActive(true);
+      role.get().setSlug(StringConvertToSlug.covertStringToSlug(roleRequest.getRoleName()));
+      role.get().setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+      roleRepository.save(role.get());
+      return RoleMapper.getInstance().toResponse(role.get());
+
+    } else {
+      throw new NotFoundException("Role id not found");
+    }
+  }
+
+  @Override
+  public RoleResponse deleteRole(Long id) {
+
+    Optional<Role> roleExist = roleRepository.getRoleById(id);
+
+    if (roleExist.isPresent()) {
+      roleExist.get().setActive(false);
+      roleExist.get().setUpdatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+      roleRepository.save(roleExist.get());
+      return RoleMapper.getInstance().toResponse(roleExist.get());
+
+    } else {
+      throw new NotFoundException("Role id not found");
     }
 
-    @Override
-    public List<RoleResponse> roleDetail(String slug) {
-        List<RoleResponse> roleResponses = new ArrayList<>();
-        roleRepository.roleDetail(slug).stream().map(
-                role -> roleResponses.add(RoleMapper.getInstance().toResponse(role))
-        ).collect(Collectors.toList());
-        return roleResponses;
-    }
-
-    @Override
-    public RoleResponse addRole(RoleRequest roleRequest) {
-        Role role = RoleMapper.getInstance().toEntity(roleRequest);
-        role.setActive(true);
-        role.setSlug(StringConvertToSlug.covertStringToSlug(roleRequest.getRoleName()));
-        role.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-        roleRepository.save(role);
-        return RoleMapper.getInstance().toResponse(role);
-    }
-
-    @Override
-    public RoleResponse updateRole(Long id, RoleRequest roleRequest) {
-
-        Optional<Role> role = roleRepository.findById(id);
-        if (role.isPresent()) {
-            role.get().setRoleName(roleRequest.getRoleName());
-            role.get().setActive(true);
-            role.get().setSlug(StringConvertToSlug.covertStringToSlug(roleRequest.getRoleName()));
-            role.get().setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-            roleRepository.save(role.get());
-            return RoleMapper.getInstance().toResponse(role.get());
-
-        } else {
-            throw new NotFoundException("Role id not found");
-        }
-    }
-
-    @Override
-    public RoleResponse deleteRole(Long id) {
-//        Optional<Role> role = roleRepository.getReferenceById(id);
-        Role role = roleRepository.getReferenceById(id);
-
-        if (role != null) {
-            role.setActive(false);
-            roleRepository.save(role);
-            return RoleMapper.getInstance().toResponse(role);
-
-        } else {
-            throw new NotFoundException("Role id not found");
-        }
-
-    }
+  }
 }

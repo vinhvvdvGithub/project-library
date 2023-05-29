@@ -1,6 +1,5 @@
 package com.practice.projectlibrary.dto.response;
 
-import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,19 +12,19 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @AllArgsConstructor
 public class LoanResponse {
-    private Long bookId;
+  private Long bookId;
 
-    private Long userId;
+  private Long userId;
 
-    private Integer quantity;
+  private Integer quantity;
 
-    private Boolean active;
+  private Boolean active;
 
-    private String status;
+  private String status;
 
-    private Timestamp dateOfCheckout;
+  private Timestamp dateOfCheckout;
 
-    private Timestamp dataDue;
+  private Timestamp dataDue;
 
-    private Timestamp dateReturned;
+  private Timestamp dateReturned;
 }

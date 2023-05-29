@@ -14,16 +14,16 @@ import java.time.Instant;
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "refresh_tokens")
-public class RefreshToken extends BaseEntity{
+public class RefreshToken extends BaseEntity {
 
-    @Column(name = "refresh_token",nullable = false,unique = true)
-    private String refreshToken;
+  @Column(name = "refresh_token", nullable = false, unique = true)
+  private String refreshToken;
 
-    @Column(nullable = false)
-    private Instant expiryDate;
+  @Column(nullable = false)
+  private Instant expiryDate;
 
-    @OneToOne
-    @JoinColumn(name = "user_id",referencedColumnName = "id")
-    private User user;
+  @OneToOne
+  @JoinColumn(name = "user_id", referencedColumnName = "id")
+  private User user;
 
 }

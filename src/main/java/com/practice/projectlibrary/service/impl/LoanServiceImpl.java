@@ -4,14 +4,13 @@ import com.practice.projectlibrary.common.Mapper.LoanMapper;
 import com.practice.projectlibrary.dto.request.LoanRequest;
 import com.practice.projectlibrary.dto.response.LoanResponse;
 import com.practice.projectlibrary.entity.Loan;
+import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.ILoanRepository;
 import com.practice.projectlibrary.repository.IUserRepository;
 import com.practice.projectlibrary.service.ILoanService;
 import jakarta.validation.Valid;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.core.Authentication;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -22,38 +21,39 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class LoanServiceImpl implements ILoanService {
-    @Autowired
-    private ILoanRepository loanRepository;
 
-    @Autowired
-    private IUserRepository userRepository;
+  private final ILoanRepository loanRepository;
+  private final IUserRepository userRepository;
+  public String userAuth;
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+  @Override
+  public List<LoanResponse> loans() {
+    List<LoanResponse> loansDTO = new ArrayList<>();
+    loanRepository.loans().stream().map(
+        loan -> loansDTO.add(LoanMapper.getInstance().toResponse(loan))
+    ).collect(Collectors.toList());
 
-
-    @Override
-    public List<LoanResponse> loans() {
-        List<LoanResponse> loansDTO = new ArrayList<>();
-        loanRepository.loans().stream().map(
-                loan -> loansDTO.add(LoanMapper.getInstance().toResponse(loan))
-        ).collect(Collectors.toList());
-
-        return loansDTO;
-    }
+    return loansDTO;
+  }
 
 
-    @Override
-    public LoanResponse addLoan(@Valid LoanRequest loanRequest) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+  @Override
+  public LoanResponse addLoan(@Valid LoanRequest loanRequest) {
 
+    userAuth = SecurityContextHolder.getContext().getAuthentication().getName();
+    boolean userLogged = userRepository.existsUserByEmail(userAuth);
+
+
+    if (userLogged) {
+      Optional<User> userExist = userRepository.findUserByEmail(userAuth);
+
+      if (userExist.isPresent() && userExist.get().getActive() == true) {
         Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
-        Loan loan = new Loan();
-        loan = LoanMapper.getInstance().toEntity(loanRequest);
+        Loan loan = LoanMapper.getInstance().toEntity(loanRequest);
         loan.setBookId(loanRequest.getBookId());
-//        loan.setUser(userRepository.findUserByEmail(authentication.getName());
-        loan.setUser(userRepository.findUserById(loanRequest.getUserId()).get());
+        loan.setUser(userExist.get());
         loan.setActive(true);
         loan.setStatus("available");
         loan.setDateOfCheckout(dateCurrent);
@@ -61,72 +61,91 @@ public class LoanServiceImpl implements ILoanService {
         loan.setDataDue(new Timestamp(System.currentTimeMillis() + 259200000));
         loan.setDateReturned(null);
         loan.setDateOfCheckout(dateCurrent);
-        loan.setCreatedBy("Librarian");
+        loan.setCreatedBy(userAuth);
 
+        loanRepository.save(loan);
 
         return LoanMapper.getInstance().toResponse(loan);
-    }
-
-    @Override
-    public List<LoanResponse> addListLoan(List<@Valid LoanRequest> loanRequests) {
-        List<LoanResponse> loansDTO = new ArrayList<>();
-        Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
-        for (LoanRequest loanRequest : loanRequests) {
-            Loan loan = new Loan();
-            loan.setBookId(loanRequest.getBookId());
-            loan.setUser(userRepository.findUserById(loanRequest.getUserId()).get());
-            loan.setQuantity(loanRequest.getQuantity());
-            loan.setActive(true);
-            loan.setStatus("available");
-            loan.setDateOfCheckout(dateCurrent);
-            //3 days
-            loan.setDataDue(new Timestamp(System.currentTimeMillis() + 259200000));
-            loan.setDateReturned(null);
-            loan.setDateOfCheckout(dateCurrent);
-            loan.setCreatedBy("Librarian");
-            loanRepository.save(loan);
-            loansDTO.add(LoanMapper.getInstance().toResponse(loan));
-        }
-
-        return loansDTO;
-    }
-
-    @Override
-    public LoanResponse updateLoan(Long id, LoanRequest loanRequests) {
-
-
-        return null;
+      } else {
+        throw new NotFoundException("User not found or deleted, check it out");
+      }
+    } else {
+      throw new NotFoundException("Please login!!!");
     }
 
 
-    @Override
-    public LoanResponse deleteLoan(Long id) {
-        Optional<Loan> currentLoan = Optional.of(loanRepository.getReferenceById(id));
+  }
 
-        if (currentLoan.isPresent()) {
-            currentLoan.get().setActive(false);
-            currentLoan.get().setStatus("removed");
-            return LoanMapper.getInstance().toResponse(currentLoan.get());
-
-        } else {
-            throw new NotFoundException("Loan not found by id");
-        }
-
+  @Override
+  public List<LoanResponse> addListLoan(List<@Valid LoanRequest> loanRequests) {
+    List<LoanResponse> loansDTO = new ArrayList<>();
+    Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
+    for (LoanRequest loanRequest : loanRequests) {
+      Loan loan = new Loan();
+      loan.setBookId(loanRequest.getBookId());
+//      loan.setUser(userRepository.findUserById(loanRequest.getUserId()).get());
+      loan.setUser(null);
+      loan.setQuantity(loanRequest.getQuantity());
+      loan.setActive(true);
+      loan.setStatus("available");
+      loan.setDateOfCheckout(dateCurrent);
+      //3 days
+      loan.setDataDue(new Timestamp(System.currentTimeMillis() + 259200000));
+      loan.setDateReturned(null);
+      loan.setDateOfCheckout(dateCurrent);
+      loan.setCreatedBy("Librarian");
+      loanRepository.save(loan);
+      loansDTO.add(LoanMapper.getInstance().toResponse(loan));
     }
 
+    return loansDTO;
+//    return null;
+  }
 
-    //user return book
-    @Override
-    public LoanResponse userToReturn(Long id) {
-        Optional<Loan> currentLoan = Optional.of(loanRepository.getReferenceById(id));
+  @Override
+  public LoanResponse updateLoan(Long id, LoanRequest loanRequests) {
 
-        if (currentLoan.isPresent()) {
-            currentLoan.get().setActive(false);
-            currentLoan.get().setStatus("returned");
-            currentLoan.get().setDateReturned(new Timestamp(System.currentTimeMillis()));
-            return LoanMapper.getInstance().toResponse(currentLoan.get());
-        } else {
-            throw new NotFoundException("Loan not found by id");
-        }
+
+    return null;
+  }
+
+
+  @Override
+  public LoanResponse deleteLoan(Long id) {
+    Optional<Loan> currentLoan = loanRepository.getLoanById(id);
+
+    if (currentLoan.isPresent()) {
+      currentLoan.get().setActive(false);
+      currentLoan.get().setStatus("removed");
+      currentLoan.get().setUpdatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
+      return LoanMapper.getInstance().toResponse(currentLoan.get());
+
+    } else {
+      throw new NotFoundException("Loan not found by id");
     }
+
+  }
+
+
+  //user return book đúng hạn
+  @Override
+  public LoanResponse userToReturn(Long id) {
+    userAuth = SecurityContextHolder.getContext().getAuthentication().getName();
+    if (userAuth.isEmpty()) {
+      throw new NotFoundException("Vui lòng đăng nhập...!");
+    } else {
+      Optional<Loan> currentLoan = loanRepository.getLoanById(id);
+      if (currentLoan.isPresent() && currentLoan.get().getUser().getEmail().equals(userAuth)) {
+        currentLoan.get().setActive(false);
+        currentLoan.get().setStatus(userAuth + "has returned");
+        currentLoan.get().setDateReturned(new Timestamp(System.currentTimeMillis()));
+        currentLoan.get().setUpdatedBy(userAuth);
+        loanRepository.save(currentLoan.get());
+        return LoanMapper.getInstance().toResponse(currentLoan.get());
+      } else {
+        throw new NotFoundException("Không tìm thấy sách muượn hoặc user không đúng");
+      }
+    }
+
+  }
 }

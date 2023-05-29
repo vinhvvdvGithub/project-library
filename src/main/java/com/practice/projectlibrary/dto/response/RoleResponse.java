@@ -12,8 +12,8 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RoleResponse {
-    private String roleName;
-    private Timestamp createdAt;
-    private String createdBy;
+  private String roleName;
+  private Timestamp createdDate;
+  private String createdBy;
 
 }

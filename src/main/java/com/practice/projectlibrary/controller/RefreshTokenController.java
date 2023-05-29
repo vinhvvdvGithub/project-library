@@ -24,7 +24,7 @@ public class RefreshTokenController {
 
   @DeleteMapping("/{userId}")
   @ResponseStatus(HttpStatus.OK)
-  public int deleteRefreshToken(@Valid @PathVariable(value = "userId",required = true) Long userId){
+  public int deleteRefreshToken(@Valid @PathVariable(value = "userId", required = true) Long userId) {
     return refreshTokenService.deteleByUserId(userId);
   }
 }

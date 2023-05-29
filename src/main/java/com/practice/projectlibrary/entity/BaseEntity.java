@@ -1,11 +1,12 @@
 package com.practice.projectlibrary.entity;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
-
-
 
 import java.sql.Timestamp;
 
@@ -16,29 +17,26 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class BaseEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
+  private Long id;
 
-//    private boolean active;
+  @Column(name = "active")
+  private Boolean active;
 
-//    @Column(name = "created_date")
-//    private Timestamp createdDate;
+  @Column(name = "created_date")
+  @CreationTimestamp
+  private Timestamp createdDate;
 
-    @Column(name = "create_at")
-    @CreationTimestamp
-    private Timestamp createdAt;
 
-    @Column(name = "create_by")
-    private String createdBy;
+  @Column(name = "create_by")
+  private String createdBy;
 
-//    @Column(name = "updated_date")
-//    private Timestamp updatedDate;
+  @Column(name = "updated_date")
+  @UpdateTimestamp
+  private Timestamp updatedDate;
 
-    @Column(name = "update_at")
-    @UpdateTimestamp
-    private Timestamp updatedAt;
 
-    @Column(name = "update_by")
-    private String updatedBy;
+  @Column(name = "update_by")
+  private String updatedBy;
 }

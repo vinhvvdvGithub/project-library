@@ -1,740 +1,740 @@
 {
-	"info": {
-		"_postman_id": "ab27af7a-a459-459c-9a37-b99512078b35",
-		"name": "LibraryProject",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
-	},
-	"item": [
-		{
-			"name": "book/api",
-			"item": [
-				{
-					"name": "list book",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/books/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"books",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create list book",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n    {\n        \"bookTitle\":\"Dac nhan tam 1\",\n        \"author\":\"Dac nhan tam 1\",\n        \"description\":\"Dac nhan tam 1\",\n        \"slug\":\"dac-nhan-tam-1\",\n        \"image\":\"Dac nhan tam 1\",\n        \"quantity\":20,\n        \"price\":2000,\n        \"categoryId\":4\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 2\",\n        \"author\":\"Dac nhan tam 2\",\n        \"description\":\"Dac nhan tam 2\",\n        \"slug\":\"dac-nhan-tam-2\",\n        \"image\":\"Dac nhan tam 2\",\n        \"quantity\":120,\n        \"price\":2500,\n        \"categoryId\":1\n\n    }\n    ,\n    {\n        \"bookTitle\":\"Dac nhan tam 3\",\n        \"author\":\"Dac nhan tam 3\",\n        \"description\":\"Dac nhan tam 3\",\n        \"slug\":\"dac-nhan-tam-3\",\n        \"image\":\"Dac nhan tam 3\",\n        \"quantity\":240,\n        \"price\":5500,\n        \"categoryId\":1\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 4\",\n        \"author\":\"Dac nhan tam 4\",\n        \"description\":\"Dac nhan tam 4\",\n        \"slug\":\"dac-nhan-tam-4\",\n        \"image\":\"Dac nhan tam 4\",\n        \"quantity\":140,\n        \"price\":20040,\n        \"categoryId\":2\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 5\",\n        \"author\":\"Dac nhan tam 5\",\n        \"description\":\"Dac nhan tam 5\",\n        \"slug\":\"dac-nhan-tam-5\",\n        \"image\":\"Dac nhan tam 5\",\n        \"quantity\":70,\n        \"price\":9000,\n        \"categoryId\":2\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 6\",\n        \"author\":\"Dac nhan tam 6\",\n        \"description\":\"Dac nhan tam 6\",\n        \"slug\":\"dac-nhan-tam-6\",\n        \"image\":\"Dac nhan tam 6\",\n        \"quantity\":70,\n        \"price\":20300,\n        \"categoryId\":4\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 7\",\n        \"author\":\"Dac nhan tam 7\",\n        \"description\":\"Dac nhan tam 7\",\n        \"slug\":\"dac-nhan-tam-7\",\n        \"image\":\"Dac nhan tam 7\",\n        \"quantity\":203,\n        \"price\":2000599,\n        \"categoryId\":1\n\n    }\n    \n]\n    ",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/books/add-list-book",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"books",
-								"add-list-book"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update book by slug && id",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"bookTitle\":\"fuck da police\",\n    \"author\":\"MAC\",\n    \"description\":\"truyen tham thu\",\n    \"slug\":\"mac\",\n    \"image\":\"mac.img\",\n    \"quantity\":20,\n    \"price\":25000,\n    \"categoryId\":4\n\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/books/conan/9",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"books",
-								"conan",
-								"9"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete book by slug && id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/books/conan/6",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"books",
-								"conan",
-								"6"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create book",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n    {\n        \"bookTitle\":\"Dac nhan tam 1\",\n        \"author\":\"Dac nhan tam 1\",\n        \"description\":\"Dac nhan tam 1\",\n        \"slug\":\"dac-nhan-tam-1\",\n        \"image\":\"Dac nhan tam 1\",\n        \"quantity\":20,\n        \"price\":2000,\n        \"categoryId\":1\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 2\",\n        \"author\":\"Dac nhan tam 2\",\n        \"description\":\"Dac nhan tam 2\",\n        \"slug\":\"dac-nhan-tam-2\",\n        \"image\":\"Dac nhan tam 2\",\n        \"quantity\":120,\n        \"price\":2500,\n        \"categoryId\":1\n    }\n    \n    \n]\n    ",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/books/addBook",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"books",
-								"addBook"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get book detail by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "list bookdd",
-					"request": {
-						"auth": {
-							"type": "basic",
-							"basic": [
-								{
-									"key": "username",
-									"value": "tenguyen2",
-									"type": "string"
-								},
-								{
-									"key": "password",
-									"value": "1234",
-									"type": "string"
-								}
-							]
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\":\"user4\",\n    \"password\":\"1234\",\n    \"email\":\"user4@gmail.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/users/add-user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"add-user"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "category/api",
-			"item": [
-				{
-					"name": "create category",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"categoryName\":\"test 1\",\n    \"slug\":\"test 1\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/add-category",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"add-category"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create list category",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[\n    {\n    \"categoryName\":\"Truyện tranh\",\n    \"slug\":\"truyen-tranh\"\n    \n    },\n    {\n    \"categoryName\":\"Sử thi\",\n    \"slug\":\"Su-thi\"\n    \n    },\n    {\n    \"categoryName\":\"Hài kịch\",\n    \"slug\":\"hai-kich\"\n    \n    },\n    {\n    \"categoryName\":\"Chánh trị\",\n    \"slug\":\"chanh-tri\"\n    \n    },\n    {\n    \"categoryName\":\"Truyện ngắn\",\n    \"slug\":\"truyen-ngan\"\n    \n    },\n    {\n    \"categoryName\":\"Truyện hài\",\n    \"slug\":\"truyen-hai\"\n    \n    },\n    {\n    \"categoryName\":\"Lịch sử\",\n    \"slug\":\"lich-su\"\n    \n    },\n    {\n    \"categoryName\":\"Truyện thám tử\",\n    \"slug\":\"truyen-tham-tu\"\n    \n    },{\n    \"categoryName\":\"Triết học\",\n    \"slug\":\"triet-hoc\"\n    }\n    \n]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/add-list-category",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"add-list-category"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "update category",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n     \"categoryName\":\"abc\",\n    \"slug\":\"abc\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/category/test 1/10",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"category",
-								"test 1",
-								"10"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "list category",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "delete category by slug id",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/category/suc-cac/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"category",
-								"suc-cac",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "get all books by category",
-					"request": {
-						"method": "GET",
-						"header": []
-					},
-					"response": []
-				},
-				{
-					"name": "category detail by id",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/2",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								"2"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "create list category",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "[{\n    \"categoryName\":\"\",\n    \"slug\":\"\"\n}]",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/categories/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"categories",
-								""
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "loan/api",
-			"item": [
-				{
-					"name": "add new loan single",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "// [\n//     {\n//         \"bookId\":1,\n//         \"userId\":1,\n//         \"quantity\":3\n//     },\n//         {\n//         \"bookId\":2,\n//         \"userId\":2,\n//         \"quantity\":1\n//     },\n//         {\n//         \"bookId\":3,\n//         \"userId\":3,\n//         \"quantity\":5\n//     },\n//         {\n//         \"bookId\":1,\n//         \"userId\":4,\n//         \"quantity\":6\n//     },\n//         {\n//         \"bookId\":1,\n//         \"userId\":1,\n//         \"quantity\":3\n//     }\n\n// ]\n{}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/loans/addloan",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"loans",
-								"addloan"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "list loans",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/loans/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"loans",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "add new loan single",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"bookId\":2,\n    \"userId\":3,\n    \"quantity\":4\n\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/loans/addloan",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"loans",
-								"addloan"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "User/api",
-			"item": [
-				{
-					"name": "add user",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\":\"user4\",\n    \"password\":\"1234\",\n    \"email\":\"user4@gmail.com\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/users/add-user",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"add-user"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Role/api",
-			"item": [
-				{
-					"name": "add-role",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"roleName\":\"admin2\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/roles/",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"roles",
-								""
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "detail role",
-					"request": {
-						"method": "GET",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/roles/search?slug=admin1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"roles",
-								"search"
-							],
-							"query": [
-								{
-									"key": "slug",
-									"value": "admin1"
-								}
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "PUT",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"roleName\":\"super admin\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/roles/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"roles",
-								"1"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "New Request",
-					"request": {
-						"method": "DELETE",
-						"header": [],
-						"url": {
-							"raw": "http://localhost:8080/api/v1/roles/1",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"roles",
-								"1"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Auth/api",
-			"item": [
-				{
-					"name": "Login",
-					"request": {
-						"auth": {
-							"type": "noauth"
-						},
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"email\":\"teonguyen2@gmail.com\",\n    \"password\":\"1234\"\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/auth/signin",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"auth",
-								"signin"
-							]
-						}
-					},
-					"response": []
-				},
-				{
-					"name": "register",
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\n    \"username\":\"teonguyen\",\n    \"password\":\"1234\",\n    \"email\":\"teonguyen@gmail.com\",\n    \"roleId\":2\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": {
-							"raw": "http://localhost:8080/api/v1/users/register",
-							"protocol": "http",
-							"host": [
-								"localhost"
-							],
-							"port": "8080",
-							"path": [
-								"api",
-								"v1",
-								"users",
-								"register"
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		}
-	]
+  "info": {
+    "_postman_id": "ab27af7a-a459-459c-9a37-b99512078b35",
+    "name": "LibraryProject",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "book/api",
+      "item": [
+        {
+          "name": "list book",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/books/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "books",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create list book",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"bookTitle\":\"Dac nhan tam 1\",\n        \"author\":\"Dac nhan tam 1\",\n        \"description\":\"Dac nhan tam 1\",\n        \"slug\":\"dac-nhan-tam-1\",\n        \"image\":\"Dac nhan tam 1\",\n        \"quantity\":20,\n        \"price\":2000,\n        \"categoryId\":4\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 2\",\n        \"author\":\"Dac nhan tam 2\",\n        \"description\":\"Dac nhan tam 2\",\n        \"slug\":\"dac-nhan-tam-2\",\n        \"image\":\"Dac nhan tam 2\",\n        \"quantity\":120,\n        \"price\":2500,\n        \"categoryId\":1\n\n    }\n    ,\n    {\n        \"bookTitle\":\"Dac nhan tam 3\",\n        \"author\":\"Dac nhan tam 3\",\n        \"description\":\"Dac nhan tam 3\",\n        \"slug\":\"dac-nhan-tam-3\",\n        \"image\":\"Dac nhan tam 3\",\n        \"quantity\":240,\n        \"price\":5500,\n        \"categoryId\":1\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 4\",\n        \"author\":\"Dac nhan tam 4\",\n        \"description\":\"Dac nhan tam 4\",\n        \"slug\":\"dac-nhan-tam-4\",\n        \"image\":\"Dac nhan tam 4\",\n        \"quantity\":140,\n        \"price\":20040,\n        \"categoryId\":2\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 5\",\n        \"author\":\"Dac nhan tam 5\",\n        \"description\":\"Dac nhan tam 5\",\n        \"slug\":\"dac-nhan-tam-5\",\n        \"image\":\"Dac nhan tam 5\",\n        \"quantity\":70,\n        \"price\":9000,\n        \"categoryId\":2\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 6\",\n        \"author\":\"Dac nhan tam 6\",\n        \"description\":\"Dac nhan tam 6\",\n        \"slug\":\"dac-nhan-tam-6\",\n        \"image\":\"Dac nhan tam 6\",\n        \"quantity\":70,\n        \"price\":20300,\n        \"categoryId\":4\n\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 7\",\n        \"author\":\"Dac nhan tam 7\",\n        \"description\":\"Dac nhan tam 7\",\n        \"slug\":\"dac-nhan-tam-7\",\n        \"image\":\"Dac nhan tam 7\",\n        \"quantity\":203,\n        \"price\":2000599,\n        \"categoryId\":1\n\n    }\n    \n]\n    ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/books/add-list-book",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "books",
+                "add-list-book"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update book by slug && id",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bookTitle\":\"fuck da police\",\n    \"author\":\"MAC\",\n    \"description\":\"truyen tham thu\",\n    \"slug\":\"mac\",\n    \"image\":\"mac.img\",\n    \"quantity\":20,\n    \"price\":25000,\n    \"categoryId\":4\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/books/conan/9",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "books",
+                "conan",
+                "9"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete book by slug && id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/books/conan/6",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "books",
+                "conan",
+                "6"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create book",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n        \"bookTitle\":\"Dac nhan tam 1\",\n        \"author\":\"Dac nhan tam 1\",\n        \"description\":\"Dac nhan tam 1\",\n        \"slug\":\"dac-nhan-tam-1\",\n        \"image\":\"Dac nhan tam 1\",\n        \"quantity\":20,\n        \"price\":2000,\n        \"categoryId\":1\n    },\n    {\n        \"bookTitle\":\"Dac nhan tam 2\",\n        \"author\":\"Dac nhan tam 2\",\n        \"description\":\"Dac nhan tam 2\",\n        \"slug\":\"dac-nhan-tam-2\",\n        \"image\":\"Dac nhan tam 2\",\n        \"quantity\":120,\n        \"price\":2500,\n        \"categoryId\":1\n    }\n    \n    \n]\n    ",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/books/addBook",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "books",
+                "addBook"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get book detail by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "list bookdd",
+          "request": {
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "tenguyen2",
+                  "type": "string"
+                },
+                {
+                  "key": "password",
+                  "value": "1234",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\":\"user4\",\n    \"password\":\"1234\",\n    \"email\":\"user4@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/users/add-user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "add-user"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "category/api",
+      "item": [
+        {
+          "name": "create category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"categoryName\":\"test 1\",\n    \"slug\":\"test 1\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/add-category",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "add-category"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create list category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[\n    {\n    \"categoryName\":\"Truyện tranh\",\n    \"slug\":\"truyen-tranh\"\n    \n    },\n    {\n    \"categoryName\":\"Sử thi\",\n    \"slug\":\"Su-thi\"\n    \n    },\n    {\n    \"categoryName\":\"Hài kịch\",\n    \"slug\":\"hai-kich\"\n    \n    },\n    {\n    \"categoryName\":\"Chánh trị\",\n    \"slug\":\"chanh-tri\"\n    \n    },\n    {\n    \"categoryName\":\"Truyện ngắn\",\n    \"slug\":\"truyen-ngan\"\n    \n    },\n    {\n    \"categoryName\":\"Truyện hài\",\n    \"slug\":\"truyen-hai\"\n    \n    },\n    {\n    \"categoryName\":\"Lịch sử\",\n    \"slug\":\"lich-su\"\n    \n    },\n    {\n    \"categoryName\":\"Truyện thám tử\",\n    \"slug\":\"truyen-tham-tu\"\n    \n    },{\n    \"categoryName\":\"Triết học\",\n    \"slug\":\"triet-hoc\"\n    }\n    \n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/add-list-category",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "add-list-category"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n     \"categoryName\":\"abc\",\n    \"slug\":\"abc\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/category/test 1/10",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "category",
+                "test 1",
+                "10"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "list category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete category by slug id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/category/suc-cac/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "category",
+                "suc-cac",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all books by category",
+          "request": {
+            "method": "GET",
+            "header": []
+          },
+          "response": []
+        },
+        {
+          "name": "category detail by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create list category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "[{\n    \"categoryName\":\"\",\n    \"slug\":\"\"\n}]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/categories/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "categories",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "loan/api",
+      "item": [
+        {
+          "name": "add new loan single",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "// [\n//     {\n//         \"bookId\":1,\n//         \"userId\":1,\n//         \"quantity\":3\n//     },\n//         {\n//         \"bookId\":2,\n//         \"userId\":2,\n//         \"quantity\":1\n//     },\n//         {\n//         \"bookId\":3,\n//         \"userId\":3,\n//         \"quantity\":5\n//     },\n//         {\n//         \"bookId\":1,\n//         \"userId\":4,\n//         \"quantity\":6\n//     },\n//         {\n//         \"bookId\":1,\n//         \"userId\":1,\n//         \"quantity\":3\n//     }\n\n// ]\n{}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans/addloan",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "loans",
+                "addloan"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "list loans",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "loans",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add new loan single",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"bookId\":2,\n    \"userId\":3,\n    \"quantity\":4\n\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/loans/addloan",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "loans",
+                "addloan"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "User/api",
+      "item": [
+        {
+          "name": "add user",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\":\"user4\",\n    \"password\":\"1234\",\n    \"email\":\"user4@gmail.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/users/add-user",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "add-user"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Role/api",
+      "item": [
+        {
+          "name": "add-role",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"roleName\":\"admin2\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/roles/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "roles",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "detail role",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/roles/search?slug=admin1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "roles",
+                "search"
+              ],
+              "query": [
+                {
+                  "key": "slug",
+                  "value": "admin1"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"roleName\":\"super admin\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/roles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "roles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "New Request",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/v1/roles/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "roles",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Auth/api",
+      "item": [
+        {
+          "name": "Login",
+          "request": {
+            "auth": {
+              "type": "noauth"
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"email\":\"teonguyen2@gmail.com\",\n    \"password\":\"1234\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/auth/signin",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "auth",
+                "signin"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"username\":\"teonguyen\",\n    \"password\":\"1234\",\n    \"email\":\"teonguyen@gmail.com\",\n    \"roleId\":2\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/v1/users/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "v1",
+                "users",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
 }

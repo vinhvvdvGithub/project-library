@@ -1,7 +1,6 @@
 package com.practice.projectlibrary.controller;
 
 import com.practice.projectlibrary.dto.request.UserRequest;
-
 import com.practice.projectlibrary.dto.response.UserResponse;
 import com.practice.projectlibrary.service.IUserService;
 import jakarta.validation.Valid;
@@ -19,32 +18,32 @@ import java.util.List;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
-    private IUserService userService;
+  @Autowired
+  private IUserService userService;
 
-    @GetMapping("")
-    public List<UserResponse> users(){
+  @GetMapping("")
+  public List<UserResponse> users() {
 
-        return userService.users();
-    }
+    return userService.users();
+  }
 
-    @PostMapping("/add-user")
-    public UserResponse addUser(@RequestBody @Valid UserRequest userRequest){
-        return userService.addUser(userRequest);
-    }
+  @PostMapping("/add-user")
+  public UserResponse addUser(@RequestBody @Valid UserRequest userRequest) {
+    return userService.addUser(userRequest);
+  }
 
-    @GetMapping("/find/{email}")
-    @ResponseStatus(HttpStatus.OK)
-    public UserResponse findByUserByEmail(@PathVariable("email") @Email(message = "{student.email.notValid}") String email){
-        return userService.findByEmail(email);
-    }
+  @GetMapping("/find/{email}")
+  @ResponseStatus(HttpStatus.OK)
+  public UserResponse findByUserByEmail(@PathVariable("email") @Email(message = "{student.email.notValid}") String email) {
+    return userService.findByEmail(email);
+  }
 
 
-    @DeleteMapping("/delete/{email}")
-    @ResponseStatus(HttpStatus.OK)
-    public void deleteUserByEmail(@PathVariable("email") @Email(message = "{student.email.notValid}") String email){
+  @DeleteMapping("/delete/{email}")
+  @ResponseStatus(HttpStatus.OK)
+  public void deleteUserByEmail(@PathVariable("email") @Email(message = "{student.email.notValid}") String email) {
 //    public void deleteUserByEmail(@PathVariable("email") String email){
-        userService.deleteUserByEmail(email);
-    }
+    userService.deleteUserByEmail(email);
+  }
 
 }

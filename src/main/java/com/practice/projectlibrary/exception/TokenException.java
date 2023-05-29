@@ -1,7 +1,7 @@
 package com.practice.projectlibrary.exception;
 
-public class TokenException extends RuntimeException{
-  public TokenException(String message){
+public class TokenException extends RuntimeException {
+  public TokenException(String message) {
     super(message);
   }
 }

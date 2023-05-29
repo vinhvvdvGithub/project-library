@@ -1,7 +1,9 @@
 package com.practice.projectlibrary.entity;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 
@@ -11,14 +13,11 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "roles")
-public class Role extends BaseEntity{
+public class Role extends BaseEntity {
 
-    @NonNull
-    @Column(name = "role_name")
-    private String roleName;
-    @NotNull
-    private String slug;
-    @NotNull
-    private Boolean active;
-
+  @NonNull
+  @Column(name = "role_name")
+  private String roleName;
+  @NotNull
+  private String slug;
 }

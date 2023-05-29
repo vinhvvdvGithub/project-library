@@ -6,13 +6,13 @@ import com.practice.projectlibrary.dto.response.UserResponse;
 import java.util.List;
 
 public interface IUserService {
-    List<UserResponse> users();
+  List<UserResponse> users();
 
-    UserResponse addUser(UserRequest userRequest);
+  UserResponse addUser(UserRequest userRequest);
 
-    UserResponse findByEmail(String email);
+  UserResponse findByEmail(String email);
 
-    void deleteUserByEmail(String email);
+  void deleteUserByEmail(String email);
 
 
 }

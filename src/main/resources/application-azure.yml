@@ -1,0 +1,31 @@
+server:
+  port: 8080
+  servlet:
+    context-path:
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  #      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://azuresandbox.mysql.database.azure.com/library_project
+    username: thomas
+    password: 123456789@@Abcd
+
+
+  security:
+    jwt:
+      app:
+        jwtSecret: 3778214125442A472D4B6150645367566B58703273357638792F423F4528482B
+        jwtExpirationInMs: 300000
+        jwtRefreshExpirationMs: 86400000
+
+  cloudinary:
+    cloud_name: dicwtezno
+    api_key: 873674499332379
+    api_secret: YSQmt8vfRpxB3ESGho9sYMe2H3Y

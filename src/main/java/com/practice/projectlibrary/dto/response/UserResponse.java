@@ -1,6 +1,9 @@
 package com.practice.projectlibrary.dto.response;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.sql.Timestamp;
 import java.util.Set;
@@ -10,10 +13,10 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserResponse {
-    private String email;
-    private String username;
-    private String avatar;
-    private Timestamp createdAt;
-    private String createdBy;
-    private Set<RoleResponse> roles;
+  private String email;
+  private String username;
+  private String avatar;
+  private Timestamp createdDate;
+  private String createdBy;
+  private Set<RoleResponse> roles;
 }

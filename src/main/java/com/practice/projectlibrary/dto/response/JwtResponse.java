@@ -10,11 +10,11 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class JwtResponse {
-    private String accessToken;
-    private String type ="Bearer";
-    private String refreshToken;
+  private String accessToken;
+  private String type = "Bearer";
+  private String refreshToken;
 
-    private String email;
+  private String email;
 
 
 }
