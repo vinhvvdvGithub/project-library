@@ -15,10 +15,9 @@ spring:
       ddl-auto: update
 #      ddl-auto: none
   datasource:
-    url: jdbc:mysql://azuresandbox.mysql.database.azure.com:3306/library_project
+    url: jdbc:mysql://azuresandbox.mysql.database.azure.com:3306/library_project?serverTimezone=UTC
     username: thomas
     password: 123456789@@Abcd
-    driver-class-name: com.mysql.jdbc.Driver
 
 
 
