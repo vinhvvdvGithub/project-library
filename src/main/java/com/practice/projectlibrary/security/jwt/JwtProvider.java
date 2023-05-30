@@ -20,10 +20,10 @@ import java.util.function.Function;
 public class JwtProvider {
   private static final Logger logger = LoggerFactory.getLogger(JwtService.class);
 
-  @Value("${app.jwtSecret}")
+  @Value("${security.jwt.token.jwtSecret}")
   private String SECRET_KEY;
 
-  @Value("${app.jwtExpirationInMs}")
+  @Value("${security.jwt.token.jwtExpirationInMs}")
   private int jwtExpirationInMs;
 
   public String generateToken(String userName) {

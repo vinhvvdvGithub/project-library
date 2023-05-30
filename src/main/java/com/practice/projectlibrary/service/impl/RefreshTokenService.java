@@ -25,7 +25,7 @@ import java.util.UUID;
 public class RefreshTokenService implements IRefreshTokenService {
 
 
-  @Value("${app.jwtRefreshExpirationMs}")
+  @Value("${security.jwt.token.jwtRefreshExpirationMs}")
   private Long jwtRefreshExpirationMs;
 
   private final JwtProvider jwtProvider;
