@@ -18,10 +18,7 @@ spring:
     username: thomas
     password: 123456789@@Abcd
     driver-class-name: com.mysql.jdbc.Driver
-<<<<<<< HEAD
 
-=======
->>>>>>> bf15e46a779f452d737cbc7c1d528407c12aca31
 
 
 security:
