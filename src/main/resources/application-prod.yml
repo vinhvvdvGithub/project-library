@@ -18,6 +18,7 @@ spring:
     url: jdbc:mysql://azuresandbox.mysql.database.azure.com/library_project
     username: thomas
     password: 123456789@@Abcd
+    driver-class-name: com.mysql.jdbc.Driver
 
 
 
