@@ -14,7 +14,8 @@ spring:
       ddl-auto: update
 #      ddl-auto: none
   datasource:
-    url: jdbc:mysql://azuresandbox.mysql.database.azure.com:3306/library_project?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
+#    url: jdbc:mysql://azuresandbox.mysql.database.azure.com:3306/library_project?useSSL=false&allowPublicKeyRetrieval=true&useTimezone=true&serverTimezone=UTC
+    url: jdbc:mysql://azuresandbox.mysql.database.azure.com:3306/library_project?useSSL=true
     username: thomas
     password: 123456789@@Abcd
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -40,5 +41,5 @@ logging:
       hibernate:
         type:
           debug
-  file:
-    name: log/dev.log
+#  file:
+#    name: log/dev.log
