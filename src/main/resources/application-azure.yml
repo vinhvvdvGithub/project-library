@@ -13,20 +13,21 @@ spring:
       ddl-auto: update
   #      ddl-auto: update
   datasource:
-    url: jdbc:mysql://azuresandbox.mysql.database.azure.com:3306/library_project
+    url: jdbc:mysql://tommydb.mysql.database.azure.com:3306/library_project?useSSL=true
     username: thomas
     password: 123456789@@Abcd
-    driver-class-name: com.mysql.jdbc.Driver
 
 
-  security:
-    jwt:
-      app:
-        jwtSecret: 3778214125442A472D4B6150645367566B58703273357638792F423F4528482B
-        jwtExpirationInMs: 300000
-        jwtRefreshExpirationMs: 86400000
+security:
+  jwt:
+    token:
+      jwtSecret: 3778214125442A472D4B6150645367566B58703273357638792F423F4528482B
+      #        jwtExpirationInMs: 300000
+      #        jwtRefreshExpirationMs: 86400000
+      jwtExpirationInMs: 30000000
+      jwtRefreshExpirationMs: 86400000000
 
-  cloudinary:
-    cloud_name: dicwtezno
-    api_key: 873674499332379
-    api_secret: YSQmt8vfRpxB3ESGho9sYMe2H3Y
+cloudinary:
+  cloud_name: dicwtezno
+  api_key: 873674499332379
+  api_secret: YSQmt8vfRpxB3ESGho9sYMe2H3Y

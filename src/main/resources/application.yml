@@ -4,13 +4,8 @@ server:
     context-path:
 spring:
   profiles:
-    active: dev
-  jpa:
-    show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
-        dialect: org.hibernate.dialect.MySQL8Dialect
+    active: azure
+
 
 
 

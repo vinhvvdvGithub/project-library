@@ -23,7 +23,8 @@ public class CloudinaryServiceImpl implements ICloudinaryService {
     try {
       File uploadedFile = convertMultiPartToFile(multipartFile);
       Map uploadResult = cloudinary.uploader().upload(uploadedFile, ObjectUtils.asMap("folder", "library_image"));
-      return uploadResult.get("url").toString();
+      String url = uploadResult.get("url").toString();
+      return url;
     } catch (Exception e) {
       throw new RuntimeException(e.getMessage());
     }
