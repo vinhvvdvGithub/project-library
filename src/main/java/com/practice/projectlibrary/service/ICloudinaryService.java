@@ -6,7 +6,7 @@ import java.io.File;
 import java.io.IOException;
 
 public interface ICloudinaryService {
-  String uploadFile(MultipartFile multipartFile);
+  String uploadFile(MultipartFile multipartFile,String slug);
 
   File convertMultiPartToFile(MultipartFile multipartFile) throws IOException;
 }

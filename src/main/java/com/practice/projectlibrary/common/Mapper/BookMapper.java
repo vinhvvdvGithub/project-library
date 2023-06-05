@@ -1,6 +1,7 @@
 package com.practice.projectlibrary.common.Mapper;
 
 
+import com.practice.projectlibrary.common.stringUltils.StringConvertToSlug;
 import com.practice.projectlibrary.dto.request.BookRequest;
 import com.practice.projectlibrary.dto.response.BookResponse;
 import com.practice.projectlibrary.entity.Book;
@@ -22,7 +23,7 @@ public class BookMapper {
     book.setBookTitle(bookRequest.getBookTitle());
     book.setAuthor(bookRequest.getAuthor());
     book.setDescription(bookRequest.getDescription());
-    book.setSlug(bookRequest.getSlug());
+    book.setSlug(StringConvertToSlug.covertStringToSlug(bookRequest.getBookTitle()));
     book.setQuantity(bookRequest.getQuantity());
     book.setPrice(bookRequest.getPrice());
     return book;
@@ -36,7 +37,7 @@ public class BookMapper {
     bookResponse.setBookTitle(book.getBookTitle());
     bookResponse.setAuthor(book.getAuthor());
     bookResponse.setDescription(book.getDescription());
-    bookResponse.setSlug(book.getSlug());
+    bookResponse.setSlug(StringConvertToSlug.covertStringToSlug(book.getBookTitle()));
     bookResponse.setImage(book.getImage());
     bookResponse.setQuantity(book.getQuantity());
     bookResponse.setPrice(book.getPrice());

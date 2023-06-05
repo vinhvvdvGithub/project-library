@@ -60,7 +60,7 @@ public class SpringSecurityConfig {
     http
         .csrf().disable()
         .authorizeHttpRequests()
-        .requestMatchers("/api/init/")
+        .requestMatchers("/","/api/init/")
         .permitAll()
         .requestMatchers("/api/v1/auth/**", "/api/v1/users/**", "/api/v1/token/**")
         .permitAll()

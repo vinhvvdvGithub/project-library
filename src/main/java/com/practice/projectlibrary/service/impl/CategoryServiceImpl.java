@@ -38,6 +38,9 @@ public class CategoryServiceImpl implements ICategorySevice {
   @Override
   public CategoryResponse addCategory(CategoryRequest categoryRequest) {
 
+    //check category exist
+
+
     Category category = CategoryMapper.getInstance().toEntity(categoryRequest);
     category.setActive(true);
     category.setCreatedBy(SecurityContextHolder.getContext().getAuthentication().getName());

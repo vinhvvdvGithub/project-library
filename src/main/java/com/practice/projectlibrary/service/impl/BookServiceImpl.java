@@ -1,6 +1,7 @@
 package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.BookMapper;
+import com.practice.projectlibrary.common.stringUltils.StringConvertToSlug;
 import com.practice.projectlibrary.dto.request.BookRequest;
 import com.practice.projectlibrary.dto.response.BookResponse;
 import com.practice.projectlibrary.entity.Book;
@@ -49,6 +50,8 @@ public class BookServiceImpl implements IBookService {
 
   @Override
   public BookResponse searchBoook(String slug) {
+
+
     Optional<Book> bookExist = bookRepository.searchBookBySlug(slug);
 
     if (bookExist.isPresent()) {
@@ -67,7 +70,7 @@ public class BookServiceImpl implements IBookService {
         throw new BadRequestException("File image is mandatory");
       } else {
         Book book = BookMapper.getInstance().toEntity(bookRequest);
-        String url = cloudinaryService.uploadFile(file);
+        String url = cloudinaryService.uploadFile(file, StringConvertToSlug.covertStringToSlug(bookRequest.getBookTitle()));
         book.setImage(url);
         book.setActive(true);
         book.setCategory(categoryExist.get());
@@ -108,7 +111,7 @@ public class BookServiceImpl implements IBookService {
       bookExist.get().setBookTitle(bookRequest.getBookTitle());
       bookExist.get().setAuthor(bookRequest.getAuthor());
       bookExist.get().setDescription(bookRequest.getDescription());
-      bookExist.get().setSlug(bookRequest.getSlug());
+      bookExist.get().setSlug(StringConvertToSlug.covertStringToSlug(bookRequest.getBookTitle()));
 //            bookExist.get().setImage(bookRequest.getImage());
       bookExist.get().setQuantity(bookRequest.getQuantity());
       bookExist.get().setPrice(bookRequest.getPrice());
