@@ -25,12 +25,14 @@ public class CategoryController {
 
   //get list category
   @GetMapping("/")
+  @ResponseStatus(HttpStatus.OK)
   public List<CategoryResponse> categories() {
     return categorySevice.categories();
   }
 
   //get detail category
   @GetMapping("/{id}")
+  @ResponseStatus(HttpStatus.OK)
   public ResponseObject categoryDetail(@PathVariable("id")   @Positive(message = "Category Id must greater than zero") Long id) {
     return new ResponseObject(HttpStatus.OK, "Detail category by id", categorySevice.categoryDetailById(id));
   }
@@ -41,7 +43,7 @@ public class CategoryController {
     return new ResponseObject(HttpStatus.OK, "Search category by slug", categorySevice.searchCategoryBySlug(slug));
   }
 
-  // add list category
+  // add list category for init project
   @PostMapping("/add-list-category")
   public List<CategoryResponse> addCategory(@RequestBody @Valid List<CategoryRequest> categoryRequest) {
     return categorySevice.addListCategory(categoryRequest);

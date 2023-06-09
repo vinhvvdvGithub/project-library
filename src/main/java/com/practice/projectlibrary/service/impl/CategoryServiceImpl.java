@@ -9,6 +9,8 @@ import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.ICategoryRepository;
 import com.practice.projectlibrary.service.ICategorySevice;
 import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
@@ -23,11 +25,12 @@ import java.util.stream.Collectors;
 public class CategoryServiceImpl implements ICategorySevice {
   private final ICategoryRepository categoryRepository;
 
+  private static final Logger logger = LoggerFactory.getLogger(CategoryServiceImpl.class);
+
 
   @Override
   public List<CategoryResponse> categories() {
     List<CategoryResponse> categorysDTO = new ArrayList<>();
-
     categoryRepository.categories().stream().map(
         category -> categorysDTO.add(CategoryMapper.getInstance().toResponse(category))
     ).collect(Collectors.toList());

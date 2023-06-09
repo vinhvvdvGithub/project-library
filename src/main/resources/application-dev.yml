@@ -38,11 +38,11 @@ cloudinary:
   api_key: 873674499332379
   api_secret: YSQmt8vfRpxB3ESGho9sYMe2H3Y
 
-logging:
-  level:
-    org:
-      hibernate:
-        type:
-          debug
-  file:
-    name: log/dev.log
+#logging:
+#  level:
+#    org:
+#      hibernate:
+#        type:
+#          debug
+#  file:
+#    name: log/dev.log
