@@ -7,27 +7,27 @@ import java.util.List;
 
 public interface ILoanService {
 
-  //get list loan
-  List<LoanResponse> loans();
+    //get list loan
+    List<LoanResponse> loans();
 
-  //get list loan book of user
-
-  //add new load
-
-  LoanResponse addLoan(LoanRequest loanRequest);
-
-  List<LoanResponse> addListLoan(List<LoanRequest> loanRequests);
+    //select detail loan
+    LoanResponse loanDetailById(Long id);
 
 
-  //update loan by slug && id
-  LoanResponse updateLoan(Long id, LoanRequest loanRequests);
+    //add new load
+
+    LoanResponse addLoan(LoanRequest loanRequest);
 
 
-  //delete loan by slug && id
-  LoanResponse deleteLoan(Long id);
+    //update loan by slug && id
+    LoanResponse updateLoan(Long id, LoanRequest loanRequests);
 
-  //user return book
-  LoanResponse userToReturn(Long id);
+
+    //delete loan by slug && id
+    LoanResponse deleteLoan(Long id);
+
+    //user return book
+    LoanResponse userToPay(Long id);
 
 
 }

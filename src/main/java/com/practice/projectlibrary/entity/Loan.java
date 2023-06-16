@@ -24,6 +24,7 @@ public class Loan extends BaseEntity {
   @ManyToOne()
   @JoinColumn(name = "user_id")
   private User user;
+
   private Integer quantity;
 
   private String status;
@@ -34,7 +35,6 @@ public class Loan extends BaseEntity {
   @Column(name = "date_due")
   private Timestamp dataDue;
 
-  @Null
   @Column(name = "date_returned", nullable = true)
   private Timestamp dateReturned;
 
