@@ -13,11 +13,23 @@ spring:
     hibernate:
 #      ddl-auto: create
       ddl-auto: update
-#      ddl-auto: none
+    generate-ddl: true
+  #      ddl-auto: none
   datasource:
     url: jdbc:mysql://localhost:3306/library_project
     username: root
     password: 123456789
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri:
+          jwk-set-uri:
+      client:
+        registration:
+          github:
+            client-id: Iv1.93e519635ca02f80
+            client-secret: c112a8708a60937ce561d6268f80a46c433d5507
 #    url: jdbc:mysql://sql.freedb.tech:3306/freedb_library_project
 #    username: freedb_ducnguyen
 #    password: wnW2YuM$yYQ*j4p

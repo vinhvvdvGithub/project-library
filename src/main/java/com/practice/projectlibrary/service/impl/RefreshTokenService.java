@@ -8,7 +8,6 @@ import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.exception.TokenRefreshException;
 import com.practice.projectlibrary.repository.IRefreshTokenRepository;
 import com.practice.projectlibrary.repository.IUserRepository;
-import com.practice.projectlibrary.security.jwt.JwtProvider;
 import com.practice.projectlibrary.security.jwt.JwtService;
 import com.practice.projectlibrary.service.IRefreshTokenService;
 import lombok.RequiredArgsConstructor;
@@ -28,7 +27,6 @@ public class RefreshTokenService implements IRefreshTokenService {
   @Value("${security.jwt.token.jwtRefreshExpirationMs}")
   private Long jwtRefreshExpirationMs;
 
-  private final JwtProvider jwtProvider;
 
   private final IRefreshTokenRepository refreshTokenRepository;
 
