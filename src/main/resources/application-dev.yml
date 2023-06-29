@@ -11,18 +11,13 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
 
     hibernate:
-#      ddl-auto: create
+      #      ddl-auto: create
       ddl-auto: update
-#      ddl-auto: none
+  #      ddl-auto: none
   datasource:
     url: jdbc:mysql://localhost:3306/library_project
     username: root
     password: 123456789
-#    url: jdbc:mysql://sql.freedb.tech:3306/freedb_library_project
-#    username: freedb_ducnguyen
-#    password: wnW2YuM$yYQ*j4p
-
-
 
 security:
   jwt:
@@ -38,11 +33,4 @@ cloudinary:
   api_key: 873674499332379
   api_secret: YSQmt8vfRpxB3ESGho9sYMe2H3Y
 
-#logging:
-#  level:
-#    org:
-#      hibernate:
-#        type:
-#          debug
-#  file:
-#    name: log/dev.log
+

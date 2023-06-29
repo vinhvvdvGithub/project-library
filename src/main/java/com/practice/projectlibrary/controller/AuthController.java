@@ -5,6 +5,7 @@ import com.practice.projectlibrary.dto.request.RegisterRequest;
 import com.practice.projectlibrary.dto.response.RefreshTokenResponse;
 import com.practice.projectlibrary.dto.response.UserResponse;
 import com.practice.projectlibrary.service.IAuthService;
+import com.practice.projectlibrary.service.IConfirmationTokenService;
 import com.practice.projectlibrary.service.impl.RefreshTokenService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
   private final IAuthService authService;
   private final RefreshTokenService refreshTokenService;
+  private final IConfirmationTokenService confirmationTokenService;
 
   @PostMapping("/register")
   public UserResponse register(@RequestBody @Valid RegisterRequest RegisterRequest) {
@@ -34,5 +36,13 @@ public class AuthController {
   public int deleteRefreshToken(@Valid @PathVariable(value = "userId") Long userId) {
     return refreshTokenService.deteleByUserId(userId);
   }
+
+  @GetMapping("/registration/confirm")
+  public String verifyTokenEmail(@RequestParam(value = "token") String token){
+     confirmationTokenService.userVerifyToken(token);
+     confirmationTokenService.deleteTokenVerified(token);
+     return "Verified";
+  }
+
 
 }

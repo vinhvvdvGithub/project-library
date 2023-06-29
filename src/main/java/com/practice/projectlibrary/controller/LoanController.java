@@ -37,11 +37,7 @@ public class LoanController {
         return loanService.addLoan(loanRequest);
     }
 
-    @PostMapping("/add-list-loan")
-    @ResponseStatus(HttpStatus.OK)
-    public List<LoanResponse> addListLoan(@RequestBody List<LoanRequest> loanRequest) {
-        return loanService.addListLoan(loanRequest);
-    }
+
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)

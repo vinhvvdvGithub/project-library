@@ -21,6 +21,9 @@ public class BaseEntity {
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
+  @Column(name = "verification_code", length = 64)
+  private String verificationCode;
+
   @Column(name = "active")
   private Boolean active;
 

@@ -84,5 +84,13 @@ public class CustomExceptionHandler {
     return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
   }
 
+  //verify token
+  @ExceptionHandler(VerifyToken.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public ErrorMessage handleVerifyTokenException(Exception ex, WebRequest web){
+    return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR,ex.getMessage());
+  }
+
+
 
 }
