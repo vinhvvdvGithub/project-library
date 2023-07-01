@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-@EnableScheduling
 public class ProjectLibraryApplication {
 
   @Value("${cloudinary.cloud_name}")

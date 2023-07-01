@@ -17,41 +17,40 @@ import java.util.List;
 @RequiredArgsConstructor
 public class LoanController {
 
-    private ILoanService loanService;
+	private final ILoanService loanService;
 
-    @GetMapping("/")
-    @ResponseStatus(HttpStatus.OK)
-    public List<LoanResponse> loans() {
-        return loanService.loans();
-    }
+	@GetMapping("/")
+	@ResponseStatus(HttpStatus.OK)
+	public List<LoanResponse> loans() {
+		return loanService.loans();
+	}
 
-    @GetMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public LoanResponse loanDetail(@PathVariable("id") Long id) {
-        return loanService.loanDetailById(id);
-    }
+	@GetMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public LoanResponse loanDetail(@PathVariable("id") Long id) {
+		return loanService.loanDetailById(id);
+	}
 
-    @PostMapping("/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public LoanResponse addLoan(@RequestBody @Valid LoanRequest loanRequest) {
-        return loanService.addLoan(loanRequest);
-    }
-
-
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public LoanResponse deleteLoan(@PathVariable("id") @Positive(message = "Id must greater than zero") Long id) {
-        return loanService.deleteLoan(id);
-    }
+	@PostMapping("/")
+	@ResponseStatus(HttpStatus.CREATED)
+	public LoanResponse addLoan(@RequestBody @Valid LoanRequest loanRequest) {
+		return loanService.addLoan(loanRequest);
+	}
 
 
-    //user trả sách
-    @PutMapping("/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    public LoanResponse userToReturn(@PathVariable("id") @Positive(message = "Id  must greater than zero") Long id) {
-        return loanService.userToPay(id);
-    }
+	@DeleteMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public LoanResponse deleteLoan(@PathVariable("id") @Positive(message = "Id must greater than zero") Long id) {
+		return loanService.deleteLoan(id);
+	}
+
+
+	//user trả sách
+	@PutMapping("/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public LoanResponse userToReturn(@PathVariable("id") @Positive(message = "Id  must greater than zero") Long id) {
+		return loanService.userToReturn(id);
+	}
 
 
 }

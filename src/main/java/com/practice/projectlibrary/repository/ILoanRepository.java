@@ -11,15 +11,16 @@ import java.util.Optional;
 @Repository
 public interface ILoanRepository extends JpaRepository<Loan, Long> {
 
-    //list loan
-    @Query(value = "SELECT * FROM loans WHERE active=true", nativeQuery = true)
-    List<Loan> loans();
+	//list loan
+	@Query(value = "SELECT * FROM loans WHERE active=true", nativeQuery = true)
+	List<Loan> loans();
 
-    @Query(value = "SELECT * FROM loans WHERE active=true and id=:id", nativeQuery = true)
-    Optional<Loan> selectLoanById(Long id);
+	List<Loan> getAllByActiveIsTrue();
 
+	@Query(value = "SELECT * FROM loans WHERE active=true and id=:id", nativeQuery = true)
+	Optional<Loan> selectLoanById(Long id);
 
-
-
+//	@Query( "select distinct l from loans as l inner join users as u on l.user_id=u.id")
+//	List<Loan> getLoans();
 
 }

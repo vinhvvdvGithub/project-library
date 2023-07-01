@@ -21,7 +21,7 @@ public class Loan extends BaseEntity {
   @Column(name = "book_id")
   private Long bookId;
 
-  @ManyToOne()
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "user_id")
   private User user;
 

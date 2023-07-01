@@ -27,7 +27,7 @@ public interface ILoanService {
     LoanResponse deleteLoan(Long id);
 
     //user return book
-    LoanResponse userToPay(Long id);
+    LoanResponse userToReturn(Long id);
 
 
 }

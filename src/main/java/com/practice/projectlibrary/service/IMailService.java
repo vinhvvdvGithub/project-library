@@ -1,7 +1,16 @@
 package com.practice.projectlibrary.service;
 
-public interface IMailService {
-    void send(String to, String subject);
+import com.practice.projectlibrary.entity.EmailDetails;
 
-    String buildEmail(String name, String link);
+public interface IMailService {
+	void send(String to, String subject);
+
+	String buildEmail(String name, String link);
+
+	String templateEmailNotification(String name);
+
+	String sendEmailNotification(EmailDetails emailDetails);
+
+	String sendEmailNotificationWithAttachment(EmailDetails emailDetails);
+
 }

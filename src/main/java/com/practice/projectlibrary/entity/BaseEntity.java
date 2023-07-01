@@ -17,29 +17,27 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 public class BaseEntity {
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
-
-  @Column(name = "verification_code", length = 64)
-  private String verificationCode;
-
-  @Column(name = "active")
-  private Boolean active;
-
-  @Column(name = "created_date")
-  @CreationTimestamp
-  private Timestamp createdDate;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
 
-  @Column(name = "create_by")
-  private String createdBy;
+	@Column(name = "active")
+	private Boolean active;
 
-  @Column(name = "updated_date")
-  @UpdateTimestamp
-  private Timestamp updatedDate;
+	@Column(name = "created_date")
+	@CreationTimestamp
+	private Timestamp createdDate;
 
 
-  @Column(name = "update_by")
-  private String updatedBy;
+	@Column(name = "create_by")
+	private String createdBy;
+
+	@Column(name = "updated_date")
+	@UpdateTimestamp
+	private Timestamp updatedDate;
+
+
+	@Column(name = "update_by")
+	private String updatedBy;
 }
