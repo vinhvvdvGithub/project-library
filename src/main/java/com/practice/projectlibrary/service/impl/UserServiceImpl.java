@@ -6,6 +6,7 @@ import com.practice.projectlibrary.dto.request.UserRequest;
 import com.practice.projectlibrary.dto.response.UserResponse;
 import com.practice.projectlibrary.entity.Role;
 import com.practice.projectlibrary.entity.User;
+import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.repository.IRoleRepository;
 import com.practice.projectlibrary.repository.IUserRepository;
 import com.practice.projectlibrary.service.IUserService;
@@ -15,6 +16,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -29,31 +31,11 @@ public class UserServiceImpl implements IUserService {
 	private final IUserRepository userRepository;
 	private final IRoleRepository roleRepository;
 	private final PasswordEncoder passwordEncoder;
-	private JavaMailSender javaMailSender;
-
-
-	//testing
-	public void register(RegisterRequest registerRequest, String siteURL) {
-		User user = new User();
-		user.setUsername(registerRequest.getUsername());
-		user.setEmail(registerRequest.getEmail());
-		user.setPassword(passwordEncoder.encode(registerRequest.getPassword()));
-
-		Set<Role> role = roleRepository.getRoleBySlug("member");
-
-
-		user.setRoles(role);
-		user.setAvatar("");
-		user.setActive(false);
-		user.setUpdatedBy("");
-		userRepository.save(user);
-	}
-
 
 	@Override
 	public List<UserResponse> users() {
 
-		return userRepository.findAll().stream().map(
+		return userRepository.users().stream().map(
 			user -> UserMapper.getInstance().toResponse(user)
 		).collect(Collectors.toList());
 
@@ -81,12 +63,13 @@ public class UserServiceImpl implements IUserService {
 	public UserResponse findByEmail(String email) {
 		Optional<User> user = userRepository.findUserByEmail(email);
 		if (user.isEmpty()) {
-			throw new RuntimeException("Not found user by id");
+			throw new NotFoundException("Not found user by Email");
 		}
 		return UserMapper.getInstance().toResponse(user.get());
 	}
 
-	@Modifying
+
+	@Transactional
 	public void deleteUserByEmail(String email) {
 		Optional<User> user = userRepository.findUserByEmail(email);
 		if (user.isEmpty()) {

@@ -91,5 +91,12 @@ public class CustomExceptionHandler {
 		return new ErrorMessage(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
 	}
 
+	//renew exception
+	@ExceptionHandler(RuntimeException.class)
+	@ResponseStatus(HttpStatus.FORBIDDEN)
+	public ErrorMessage handleRuntimeException(Exception ex, WebRequest web) {
+		return new ErrorMessage(HttpStatus.FORBIDDEN, ex.getMessage());
+	}
+
 
 }

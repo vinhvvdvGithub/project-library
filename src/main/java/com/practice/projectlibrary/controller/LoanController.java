@@ -48,9 +48,19 @@ public class LoanController {
 	//user trả sách
 	@PutMapping("/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	public LoanResponse userToReturn(@PathVariable("id") @Positive(message = "Id  must greater than zero") Long id) {
-		return loanService.userToReturn(id);
+	public LoanResponse toReturn(@PathVariable("id") @Positive(message = "Id  must greater than zero") Long id) {
+		return loanService.toReturn(id);
 	}
+
+	//user renew loan
+	@PutMapping("/renew/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	public LoanResponse toRenew(@PathVariable("id") @Positive(message = "Id  must greater than zero") Long id){
+		return loanService.toRenew(id);
+	}
+
+
+
 
 
 }

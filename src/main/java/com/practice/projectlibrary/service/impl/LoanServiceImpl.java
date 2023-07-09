@@ -8,6 +8,7 @@ import com.practice.projectlibrary.entity.EmailDetails;
 import com.practice.projectlibrary.entity.Loan;
 import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.exception.NotFoundException;
+import com.practice.projectlibrary.exception.RenewException;
 import com.practice.projectlibrary.repository.ILoanRepository;
 import com.practice.projectlibrary.repository.IUserRepository;
 import com.practice.projectlibrary.service.ILoanService;
@@ -24,6 +25,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -36,11 +43,14 @@ import java.util.stream.Collectors;
 public class LoanServiceImpl implements ILoanService {
 
 	private static final Logger log = LoggerFactory.getLogger(SchedulingTask.class);
-
 	private final ILoanRepository loanRepository;
 	private final IUserRepository userRepository;
 	private final IMailService mailService;
 	public String userAuth;
+
+	//time handle for now
+	public static ZoneId zoneId = ZoneId.of("Asia/Ho_Chi_Minh");
+	public static LocalDateTime now = LocalDateTime.now();
 
 	@Override
 	public List<LoanResponse> loans() {
@@ -69,21 +79,23 @@ public class LoanServiceImpl implements ILoanService {
 
 		userAuth = SecurityContextHolder.getContext().getAuthentication().getName();
 
-
 		Optional<User> userExist = userRepository.findUserByEmail(userAuth);
 
 		if (userExist.isPresent() && userExist.get().getActive() == true) {
-			Timestamp dateCurrent = new Timestamp(System.currentTimeMillis());
 			Loan loan = LoanMapper.getInstance().toEntity(loanRequest);
 			loan.setBookId(loanRequest.getBookId());
 			loan.setUser(userExist.get());
 			loan.setActive(true);
 			loan.setStatus("Check out");
-			loan.setDateOfCheckout(dateCurrent);
+
+			ZonedDateTime dateOfCheckout = now.atZone(zoneId);
+			loan.setDateOfCheckout(Timestamp.from(dateOfCheckout.toInstant()));
+			log.info("setDateOfCheckout: " + Timestamp.from(dateOfCheckout.toInstant()));
 			//3 days
-			loan.setDataDue(new Timestamp(System.currentTimeMillis() + 259200000));
+
+			loan.setDueDate(Timestamp.from(now.plusDays(3).atZone(zoneId).toInstant()));
+			log.info("setDueDate: " + Timestamp.from(now.plusDays(3).atZone(zoneId).toInstant()));
 			loan.setDateReturned(null);
-			loan.setDateOfCheckout(dateCurrent);
 			loan.setCreatedBy(userAuth);
 
 			loanRepository.save(loan);
@@ -124,8 +136,7 @@ public class LoanServiceImpl implements ILoanService {
 
 	//user trả book đúng hạn
 	@Override
-	@Modifying
-	public LoanResponse userToReturn(Long id) {
+	public LoanResponse toReturn(Long id) {
 		userAuth = SecurityContextHolder.getContext().getAuthentication().getName();
 
 		Optional<Loan> currentLoan = loanRepository.selectLoanById(id);
@@ -134,17 +145,56 @@ public class LoanServiceImpl implements ILoanService {
 			currentLoan.get().setStatus("Check in");
 			currentLoan.get().setDateReturned(new Timestamp(System.currentTimeMillis()));
 			currentLoan.get().setUpdatedBy(userAuth);
+			loanRepository.save(currentLoan.get());
 			log.info("updated userToReturnBook");
-			try {
-				loanRepository.save(currentLoan.get());
 
-			} catch (Exception e) {
-				log.error(e.getMessage());
-				e.printStackTrace();
-			}
 			return LoanMapper.getInstance().toResponse(currentLoan.get());
 		} else {
-			throw new NotFoundException("Không tìm thấy sách muượn hoặc user không đúng");
+			log.info("Loan Id "+ id + "not found");
+			throw new NotFoundException("Không tìm thấy!!!");
+		}
+
+
+	}
+
+	@Override
+	public LoanResponse toRenew(Long id) {
+
+		Optional<Loan> currentLoan = loanRepository.selectLoanById(id);
+
+		//check active
+		if (currentLoan.isPresent()) {
+			LocalDateTime updatedTime = currentLoan.get().getUpdatedDate().toLocalDateTime();
+			int logRenewTime = currentLoan.get().getLogRenew();
+
+			//check log renew time
+			if (logRenewTime > 3) {
+				throw new RenewException("Đã quá số lần gia hạn sách");
+			}
+
+			//check renew in once day
+			if (now.getDayOfMonth() == updatedTime.getDayOfMonth()) {
+				throw new RenewException("Bạn đã gia hạn sách trong ngày hôm nay");
+			}
+
+			LocalDateTime oldDueDate = currentLoan.get().getDueDate().toLocalDateTime();
+			log.info("oldDueDateTimestamp " + oldDueDate);
+
+			LocalDateTime newDueDate = oldDueDate.plusDays(3);
+
+			ZonedDateTime dueDateNew = newDueDate.atZone(zoneId);
+			log.info("dueDateNew " + dueDateNew);
+
+
+			currentLoan.get().setDueDate(Timestamp.from(dueDateNew.toInstant()));
+			currentLoan.get().setStatus("Renew time: " + logRenewTime + " at: " + now);
+			currentLoan.get().setLogRenew(logRenewTime += 1);
+			loanRepository.save(currentLoan.get());
+
+			return LoanMapper.getInstance().toResponse(currentLoan.get());
+
+		} else {
+			throw new NotFoundException("Không tìm thấy " + id);
 		}
 
 
@@ -152,18 +202,18 @@ public class LoanServiceImpl implements ILoanService {
 
 
 	//scheduling 12h check time returned
-	@Scheduled(fixedRate = 43200000)
+//	@Scheduled(fixedRate = 43200000)
 	@Transactional
 	public void updateTimeExpired() {
-		Timestamp dateNow = new Timestamp(System.currentTimeMillis());
+
 		List<Loan> loans = loanRepository.loans();
 //		handle time expired
 		loans.forEach(loan -> {
-			if(loan.getDateReturned() != null){
-				if (dateNow.after(loan.getDataDue())) {
+			if (loan.getDateReturned() != null && loan.getStatus().equals("has expired.")) {
+				if (now.isAfter(loan.getDueDate().toLocalDateTime())) {
 					User user = userRepository.getReferenceById(loan.getUser().getId());
-					log.info("User Id: " + loan.getUser().getId() + " trễ hẹn ngày trả sách");
-					loan.setStatus("trễ hẹn ngày trả sách");
+					log.info("User Id: " + loan.getUser().getId() + " has expired");
+					loan.setStatus("has expired.");
 					loanRepository.save(loan);
 					//send email
 					EmailDetails emailNotification = new EmailDetails();

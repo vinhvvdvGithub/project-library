@@ -86,20 +86,10 @@ public class JwtService {
           .parseClaimsJws(token)
           .getBody();
     } else {
-      throw new TokenException("Some thing went wrong ");
+			logger.error("Something went wrong");
+      throw new TokenException("Something went wrong ");
     }
-//        Claims claims = null;
-//        try {
-//            claims = Jwts
-//                    .parserBuilder()
-//                    .setSigningKey(getSignInKey())
-//                    .build()
-//                    .parseClaimsJws(token)
-//                    .getBody();
-//        } catch (TokenException ex) {
-//            new TokenException(ex.getMessage());
-//        }
-//        return claims;
+
 
   }
 

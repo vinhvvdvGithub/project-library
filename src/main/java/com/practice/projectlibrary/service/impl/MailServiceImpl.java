@@ -2,19 +2,17 @@ package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.entity.EmailDetails;
 import com.practice.projectlibrary.service.IMailService;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
-import javax.mail.MessagingException;
 import java.io.File;
 
 
@@ -22,9 +20,7 @@ import java.io.File;
 @RequiredArgsConstructor
 public class MailServiceImpl implements IMailService {
 
-
 	private final JavaMailSender mailSender;
-
 	private final static Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
 
 	@Override
@@ -40,6 +36,7 @@ public class MailServiceImpl implements IMailService {
 			helper.setSubject("Confirm your email");
 			helper.setFrom("library@system.com");
 			mailSender.send(mimeMessage);
+
 		} catch (RuntimeException messagingException) {
 			logger.error("error " + messagingException);
 			throw new IllegalStateException("some error");
@@ -49,8 +46,10 @@ public class MailServiceImpl implements IMailService {
 		}
 	}
 
+
+
 	@Override
-	public String buildEmail(String name, String link) {
+	public String emailVerifyAccount(String name, String link) {
 		return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
 			"\n" +
 			"<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
@@ -191,6 +190,7 @@ public class MailServiceImpl implements IMailService {
 	}
 
 	@Override
+	@Async
 	public String sendEmailNotification(EmailDetails emailDetails) {
 		try {
 			MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -202,17 +202,15 @@ public class MailServiceImpl implements IMailService {
 			helper.setSubject(emailDetails.getSubject());
 			helper.setFrom("library@system.com");
 			mailSender.send(mimeMessage);
-		} catch (RuntimeException messagingException) {
+		} catch (MessagingException messagingException) {
 			logger.error("error " + messagingException);
 			throw new IllegalStateException("some error");
-		} catch (jakarta.mail.MessagingException e) {
-			logger.error("error jakarta mail " + e);
-			throw new RuntimeException(e);
 		}
 		return "Mail Sent Successfully...";
 	}
 
 	@Override
+	@Async
 	public String sendEmailNotificationWithAttachment(EmailDetails emailDetails) {
 
 		try {
@@ -234,12 +232,9 @@ public class MailServiceImpl implements IMailService {
 
 
 			mailSender.send(mimeMessage);
-		} catch (RuntimeException messagingException) {
+		} catch (MessagingException messagingException) {
 			logger.error("error " + messagingException);
 			throw new IllegalStateException("some error");
-		} catch (jakarta.mail.MessagingException e) {
-			logger.error("error jakarta mail " + e);
-			throw new RuntimeException(e);
 		}
 		return "Mail Sent Successfully...";
 	}

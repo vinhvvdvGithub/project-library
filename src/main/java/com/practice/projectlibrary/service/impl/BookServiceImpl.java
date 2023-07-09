@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
@@ -50,7 +51,6 @@ public class BookServiceImpl implements IBookService {
 
   @Override
   public BookResponse searchBoook(String slug) {
-
 
     Optional<Book> bookExist = bookRepository.searchBookBySlug(slug);
 
@@ -103,7 +103,7 @@ public class BookServiceImpl implements IBookService {
   }
 
   @Override
-  @Modifying
+  @Transactional
   public BookResponse updateBook(String slug, Long id, BookRequest bookRequest) {
 
     Optional<Book> bookExist = bookRepository.getBookBySlugId(slug, id);
@@ -117,7 +117,6 @@ public class BookServiceImpl implements IBookService {
       bookExist.get().setPrice(bookRequest.getPrice());
       Category category = categoryRepository.getById(bookRequest.getCategoryId());
       bookExist.get().setCategory(category);
-      bookRepository.save(bookExist.get());
       return BookMapper.getInstance().toResponse(bookExist.get());
 
     } else {
@@ -126,13 +125,12 @@ public class BookServiceImpl implements IBookService {
   }
 
   @Override
-  @Modifying
+  @Transactional
   public BookResponse deleteBook(String slug, Long id) {
     Optional<Book> bookExist = bookRepository.getBookBySlugId(slug, id);
     if (bookExist.isPresent()) {
       bookExist.get().setActive(false);
       bookExist.get().setUpdatedBy(SecurityContextHolder.getContext().getAuthentication().getName());
-      bookRepository.save(bookExist.get());
       return BookMapper.getInstance().toResponse(bookExist.get());
     } else {
       throw new NotFoundException("Not found book by slug and id, check again");
@@ -144,7 +142,7 @@ public class BookServiceImpl implements IBookService {
     List<Book> resultsBookEntity = bookRepository.searchBook(slug);
 
     if (resultsBookEntity.isEmpty()) {
-      logger.debug("Không tìm thấy book bằng slug .... ");
+      logger.debug("Không tìm thấy sách: " + slug);
       throw new NotFoundException("Không tìm thấy sách....");
     } else {
       List<BookResponse> resultsBookRespone = new ArrayList<>();

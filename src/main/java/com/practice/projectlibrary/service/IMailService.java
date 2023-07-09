@@ -3,11 +3,14 @@ package com.practice.projectlibrary.service;
 import com.practice.projectlibrary.entity.EmailDetails;
 
 public interface IMailService {
-	void send(String to, String subject);
 
-	String buildEmail(String name, String link);
+
+	String emailVerifyAccount(String name, String link);
 
 	String templateEmailNotification(String name);
+
+	void send(String to, String subject);
+
 
 	String sendEmailNotification(EmailDetails emailDetails);
 

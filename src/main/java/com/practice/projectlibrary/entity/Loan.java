@@ -18,24 +18,27 @@ import java.sql.Timestamp;
 public class Loan extends BaseEntity {
 
 
-  @Column(name = "book_id")
-  private Long bookId;
+	@Column(name = "book_id")
+	private Long bookId;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "user_id")
-  private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "user_id")
+	private User user;
 
-  private Integer quantity;
+	private Integer quantity;
 
-  private String status;
+	private String status;
 
-  @Column(name = "date_of_checkout")
-  private Timestamp dateOfCheckout;
+	@Column(name = "log_renew", nullable = true,columnDefinition = "integer default 0")
+	private Integer logRenew;
 
-  @Column(name = "date_due")
-  private Timestamp dataDue;
+	@Column(name = "date_of_checkout")
+	private Timestamp dateOfCheckout;
 
-  @Column(name = "date_returned", nullable = true)
-  private Timestamp dateReturned;
+	@Column(name = "date_due")
+	private Timestamp dueDate;
+
+	@Column(name = "date_returned", nullable = true)
+	private Timestamp dateReturned;
 
 }

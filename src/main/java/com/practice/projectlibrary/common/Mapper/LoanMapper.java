@@ -34,7 +34,7 @@ public class LoanMapper {
     loanResponse.setActive(loan.getActive());
     loanResponse.setStatus(loan.getStatus());
     loanResponse.setDateOfCheckout(loan.getDateOfCheckout());
-    loanResponse.setDataDue(loan.getDataDue());
+    loanResponse.setDataDue(loan.getDueDate());
     loanResponse.setDateReturned(loan.getDateReturned());
 
     return loanResponse;
