@@ -2,6 +2,7 @@ package com.practice.projectlibrary;
 
 import com.cloudinary.Cloudinary;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -11,32 +12,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 @SpringBootApplication
-public class ProjectLibraryApplication {
+public class ProjectLibraryApplication implements CommandLineRunner {
 
-  @Value("${cloudinary.cloud_name}")
-  private String cloudName;
 
-  @Value("${cloudinary.api_key}")
-  private String apiKey;
+	@Override
+	public void run(String args[]) throws Exception
+	{
 
-  @Value("${cloudinary.api_secret}")
+		// Print statement when method is called
+		System.out.println("HEllo world");
+	}
 
-  private String apiSecret;
-
-  public static void main(String[] args) {
-    SpringApplication.run(ProjectLibraryApplication.class, args);
-  }
-
-  @Bean
-  public Cloudinary cloudinary() {
-    Cloudinary cloudinary = null;
-    Map config = new HashMap();
-    config.put("cloud_name", cloudName);
-    config.put("api_key", apiKey);
-    config.put("api_secret", apiSecret);
-    cloudinary = new Cloudinary(config);
-    return cloudinary;
-  }
+	public static void main(String[] args) {
+		SpringApplication.run(ProjectLibraryApplication.class, args);
+	}
 
 
 }

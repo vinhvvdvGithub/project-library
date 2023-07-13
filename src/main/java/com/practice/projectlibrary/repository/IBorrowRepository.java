@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ILoanRepository extends JpaRepository<Loan, Long> {
+public interface IBorrowRepository extends JpaRepository<Loan, Long> {
 
 	//list loan
 	@Query(value = "SELECT * FROM loans WHERE active=true", nativeQuery = true)

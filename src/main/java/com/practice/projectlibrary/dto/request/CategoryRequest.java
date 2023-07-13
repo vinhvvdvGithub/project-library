@@ -20,8 +20,5 @@ public class CategoryRequest {
   @NotEmpty(message = "Category name is mandatory")
   private String categoryName;
 
-  @NotBlank(message = "Category slug is mandatory")
-  @NotNull(message = "Category slug is mandatory")
-  @NotEmpty(message = "Category slug is mandatory")
-  private String slug;
+
 }

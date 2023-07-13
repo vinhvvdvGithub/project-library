@@ -1,7 +1,6 @@
 package com.practice.projectlibrary.service.impl;
 
 import com.practice.projectlibrary.common.Mapper.LoanMapper;
-import com.practice.projectlibrary.common.Schedule.SchedulingTask;
 import com.practice.projectlibrary.dto.request.LoanRequest;
 import com.practice.projectlibrary.dto.response.LoanResponse;
 import com.practice.projectlibrary.entity.EmailDetails;
@@ -9,28 +8,23 @@ import com.practice.projectlibrary.entity.Loan;
 import com.practice.projectlibrary.entity.User;
 import com.practice.projectlibrary.exception.NotFoundException;
 import com.practice.projectlibrary.exception.RenewException;
-import com.practice.projectlibrary.repository.ILoanRepository;
+import com.practice.projectlibrary.repository.IBorrowRepository;
 import com.practice.projectlibrary.repository.IUserRepository;
-import com.practice.projectlibrary.service.ILoanService;
+import com.practice.projectlibrary.service.IBorrowService;
 import com.practice.projectlibrary.service.IMailService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
-import java.time.temporal.ChronoField;
-import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -40,10 +34,10 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @EnableScheduling
 //@Transactional
-public class LoanServiceImpl implements ILoanService {
+public class BorrowServiceImpl implements IBorrowService {
 
-	private static final Logger log = LoggerFactory.getLogger(SchedulingTask.class);
-	private final ILoanRepository loanRepository;
+	private static final Logger log = LoggerFactory.getLogger(BorrowServiceImpl.class);
+	private final IBorrowRepository loanRepository;
 	private final IUserRepository userRepository;
 	private final IMailService mailService;
 	public String userAuth;
@@ -81,7 +75,7 @@ public class LoanServiceImpl implements ILoanService {
 
 		Optional<User> userExist = userRepository.findUserByEmail(userAuth);
 
-		if (userExist.isPresent() && userExist.get().getActive() == true) {
+		if (userExist.isPresent()) {
 			Loan loan = LoanMapper.getInstance().toEntity(loanRequest);
 			loan.setBookId(loanRequest.getBookId());
 			loan.setUser(userExist.get());
@@ -102,7 +96,8 @@ public class LoanServiceImpl implements ILoanService {
 
 			return LoanMapper.getInstance().toResponse(loan);
 		} else {
-			throw new NotFoundException("User not found or inactive, check it out");
+			log.info("User not found: " + userAuth);
+			throw new NotFoundException("User not found");
 		}
 
 

@@ -1,5 +1,6 @@
 package com.practice.projectlibrary.common.Mapper;
 
+import com.practice.projectlibrary.common.stringUltils.StringConvertToSlug;
 import com.practice.projectlibrary.dto.request.CategoryRequest;
 import com.practice.projectlibrary.dto.response.BookResponse;
 import com.practice.projectlibrary.dto.response.CategoryResponse;
@@ -25,7 +26,7 @@ public class CategoryMapper {
   public Category toEntity(CategoryRequest categoryRequest) {
     Category category = new Category();
     category.setCategoryName(categoryRequest.getCategoryName());
-    category.setSlug(categoryRequest.getSlug());
+    category.setSlug(StringConvertToSlug.covertStringToSlug(categoryRequest.getCategoryName())) ;
     return category;
   }
 

@@ -43,10 +43,10 @@ public class BookController {
     }
   }
 
-  @PostMapping("/{slug}/{id}")
+  @PutMapping("/{slug}/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public BookResponse updateBook(@PathVariable("slug") @NotNull(message = "slug is mandatory") String slug, @PathVariable("id") @Positive(message = "Book Id greater than zero") Long id, @Valid @RequestBody BookRequest bookRequest) {
-    return bookService.updateBook(slug, id, bookRequest);
+  public BookResponse updateBook(@RequestPart("file") MultipartFile file,@PathVariable("slug") @NotNull(message = "slug is mandatory") String slug, @PathVariable("id") @Positive(message = "Book Id greater than zero") Long id, @Valid @RequestPart("bookRequest") BookRequest bookRequest) {
+    return bookService.updateBook(file,slug, id, bookRequest);
   }
 
   @DeleteMapping("/{slug}/{id}")
@@ -60,10 +60,4 @@ public class BookController {
     return bookService.searchBoook(slug);
   }
 
-
-//  @GetMapping("/search/{slug}")
-//  @ResponseStatus(HttpStatus.OK)
-//  public List<BookResponse> search(@PathVariable("slug") @NotNull(message = "Slug is mandatory") String slug) {
-//    return bookService.search(slug);
-//  }
 }

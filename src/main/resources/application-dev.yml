@@ -23,8 +23,6 @@ security:
   jwt:
     token:
       jwtSecret: 3778214125442A472D4B6150645367566B58703273357638792F423F4528482B
-      #        jwtExpirationInMs: 300000
-      #        jwtRefreshExpirationMs: 86400000
       jwtExpirationInMs: 30000000
       jwtRefreshExpirationMs: 86400000000
 

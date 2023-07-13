@@ -19,7 +19,7 @@ public interface IBookService {
   List<BookResponse> addListBook(List<BookRequest> bookRequest);
 
   //update book by slug && id
-  BookResponse updateBook(String slug, Long id, BookRequest bookRequest);
+  BookResponse updateBook(MultipartFile file,String slug, Long id, BookRequest bookRequest);
 
   //delete book by slug && id
   BookResponse deleteBook(String slug, Long id);

@@ -14,15 +14,6 @@ public interface ICategoryRepository extends JpaRepository<Category, Long> {
   //proxy entity for insert book
   Category getById(Long id);
 
-
-  //check exist
-  @Query(value = "SELECT c.id FROM categories c WHERE c.active = true AND c.id=:id", nativeQuery = true)
-  Boolean existsCategoryById(Long id);
-
-  @Query(value = "SELECT c.id FROM categories c WHERE c.active = true AND c.slug like %:slug%", nativeQuery = true)
-  Boolean existsCategoryBySlug(String slug);
-
-
   //list category
   @Query(value = "SELECT * FROM categories WHERE active = true", nativeQuery = true)
   List<Category> categories();

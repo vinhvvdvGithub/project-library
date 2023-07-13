@@ -5,7 +5,7 @@ import com.practice.projectlibrary.dto.response.LoanResponse;
 
 import java.util.List;
 
-public interface ILoanService {
+public interface IBorrowService {
 
 	//get list loan
 	List<LoanResponse> loans();

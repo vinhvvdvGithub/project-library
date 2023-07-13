@@ -24,8 +24,6 @@ public class BookRequest {
   @NotEmpty(message = "Description is mandatory")
   private String description;
 
-//    @NotEmpty(message = "Image is mandatory")
-//    private MultipartFile image;
 
   @NotNull(message = "Quantity is mandatory")
   private Integer quantity;
