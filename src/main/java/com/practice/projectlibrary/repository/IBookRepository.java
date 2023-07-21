@@ -16,7 +16,8 @@ public interface IBookRepository extends JpaRepository<Book, Long> {
   Boolean existsBookById(Long id);
 
   //list book
-  @Query(value = "SELECT * FROM books WHERE active = true", nativeQuery = true)
+//  @Query(value = "SELECT * FROM books WHERE active = true", nativeQuery = true)
+	@Query(value = "select b.id, b.book_title,c.category_name from books as b inner join categories as c on b.category_id = c.id where b.active = true", nativeQuery = true)
   List<Book> books();
 
   @Query(value = "SELECT * FROM books WHERE (active = true AND slug=:slug AND id=:id)", nativeQuery = true)

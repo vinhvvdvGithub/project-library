@@ -56,7 +56,7 @@ public class CategoryController {
   }
 
   //update category by slug && id
-  @PostMapping("/{slug}/{id}")
+  @PutMapping("/{slug}/{id}")
   public CategoryResponse updateCategory(@PathVariable("slug") @NotNull(message = "slug is mandatory") String categorySlug, @PathVariable("id") @NotNull(message = "Category Id is mandatory") @Positive(message = "ID lớn hơn hoặc bằng 0") Long id, @Valid @RequestBody CategoryRequest categoryRequest) {
     return categorySevice.updateCategory(categorySlug, id, categoryRequest);
   }
